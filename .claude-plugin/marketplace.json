@@ -1,0 +1,15 @@
+{
+  "name": "android-prototype-skill",
+  "owner": { "name": "jun-works", "url": "https://github.com/jun-works" },
+  "metadata": { "description": "Expressive Android app UI prototypes for Claude Code.", "version": "2.0.0" },
+  "plugins": [
+    {
+      "name": "android-prototype",
+      "source": "./",
+      "description": "Expressive Android app UI prototypes, one flow at a time, with signature motion, character guides, automated layout/motion checks and Compose implementation notes.",
+      "version": "2.0.0",
+      "category": "design",
+      "keywords": ["android", "prototype", "ui", "motion", "design", "compose", "korean"]
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="{{LANG}}" data-theme="UNSET">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>{{APP_NAME}}</title>
+<!-- Fonts: keep Material Symbols. Swap the text families per direction (Google Fonts only). -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..800&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- Shell runtime: inlined by `proto.py build`. Do not edit the shell files. -->
+<link rel="stylesheet" href="{{SHELL_CSS}}" data-shell>
+<style id="theme">
+/* @theme:start — colour roles. Generate with: proto.py palette --seed "#hex" --write this-file */
+:root{}
+/* @theme:end */
+/* @brand:start — the direction's voice: type, shape, density. Edit by hand. */
+:root{
+  --font-display:"Roboto Flex","Noto Sans KR",system-ui,sans-serif;
+  --font-body:"Roboto Flex","Noto Sans KR",system-ui,sans-serif;
+  --btn-radius:var(--r-full);--card-radius:var(--r-md);--sheet-radius:var(--r-xl);--fab-radius:var(--r-lg);
+}
+/* @brand:end */
+</style>
+<style id="app">
+/* App-specific components and layout. Prefer shell classes first (references/components.md). */
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="device" data-time="9:30">
+  <div class="screens">
+
+    <!-- STARTER: replace every screen below. One <section class="screen"> per screen, unique id. -->
+    <section class="screen" id="home" data-start data-title="STARTER home">
+      <header class="top-app-bar">
+        <h1 class="title">STARTER</h1>
+        <button class="icon-btn" data-go="search" aria-label="Search"><span class="ms">search</span></button>
+      </header>
+      <div class="content">
+        <div class="list">
+          <button class="list-item two" data-go="detail">
+            <span class="avatar">A</span>
+            <span class="body"><span class="headline">STARTER</span><span class="supporting">STARTER</span></span>
+            <span class="trail">STARTER</span>
+          </button>
+        </div>
+      </div>
+      <button class="fab" data-sheet="new-sheet" aria-label="New"><span class="ms">add</span></button>
+    </section>
+
+    <section class="screen" id="search" data-title="STARTER search">
+      <header class="top-app-bar">
+        <button class="icon-btn" data-back aria-label="Back"><span class="ms">arrow_back</span></button>
+        <h1 class="title">STARTER</h1>
+      </header>
+      <div class="content pad"><p class="muted">STARTER</p></div>
+    </section>
+
+    <section class="screen" id="me" data-title="STARTER me">
+      <header class="top-app-bar"><h1 class="title">STARTER</h1></header>
+      <div class="content pad"><p class="muted">STARTER</p></div>
+    </section>
+
+    <section class="screen" id="detail" data-title="STARTER detail">
+      <header class="top-app-bar">
+        <button class="icon-btn" data-back aria-label="Back"><span class="ms">arrow_back</span></button>
+        <h1 class="title">STARTER</h1>
+        <button class="icon-btn" data-dialog="confirm-delete" aria-label="Delete"><span class="ms">delete</span></button>
+      </header>
+      <div class="content pad"><p>STARTER</p></div>
+    </section>
+  </div>
+
+  <!-- Shared bottom navigation: shown on the screens listed in data-for -->
+  <nav class="nav-bar" data-for="home,me">
+    <button class="nav-item" data-tab="home"><span class="pill"><span class="ms">home</span></span>STARTER</button>
+    <button class="nav-item" data-tab="me"><span class="pill"><span class="ms">person</span></span>STARTER</button>
+  </nav>
+
+  <!-- Overlays (bottom sheets, dialogs, menus) -->
+  <div class="overlays">
+    <div class="sheet" id="new-sheet">
+      <div class="sheet-title">STARTER</div>
+      <form class="sheet-body pad" data-action="createItem">
+        <label class="field"><input name="name" placeholder=" " required><span class="label">STARTER</span></label>
+        <div class="sheet-actions" style="padding:16px 0 8px"><button type="button" class="btn text" data-close>STARTER</button><span class="grow"></span><button class="btn">STARTER</button></div>
+      </form>
+    </div>
+    <div class="dialog" id="confirm-delete">
+      <div class="d-title">STARTER</div>
+      <p class="d-text">STARTER</p>
+      <div class="d-actions"><button class="btn text" data-close>STARTER</button><button class="btn text" data-action="deleteItem">STARTER</button></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="{{SHELL_JS}}" data-shell></script>
+<script id="app-js">
+/* App logic. State lives in App.state; render lists from it so add/delete/filter really work. */
+App.state.items = [];
+App.actions.createItem = function (form) {
+  App.state.items.unshift({ name: form.name.value });
+  form.reset(); App.close(); App.snack('STARTER');
+};
+App.actions.deleteItem = function () { App.close(); App.back(); App.snack('STARTER', 'Undo', function () {}); };
+</script>
+</body>
+</html>

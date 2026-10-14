@@ -1,0 +1,10 @@
+{
+  "name": "android-prototype",
+  "description": "Expressive Android app UI prototypes, one flow at a time: each flow built around a signature moment (custom motion or character guide) on a native Android structure, verified with headless-Chrome audits, screenshots and motion filmstrips, and recorded in DESIGN_NOTES.md with Compose implementation notes.",
+  "version": "2.0.0",
+  "author": { "name": "jun-works", "url": "https://github.com/jun-works" },
+  "homepage": "https://github.com/jun-works/android-prototype-skill",
+  "repository": "https://github.com/jun-works/android-prototype-skill",
+  "license": "MIT",
+  "keywords": ["android", "prototype", "ui", "motion", "design", "compose"]
+}

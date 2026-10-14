@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="ko" data-theme="umteum-soil">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>움틈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700&family=Gothic+A1:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Shell runtime: inlined by `proto.py build`. Do not edit the shell files. -->
+<link rel="stylesheet" href="../../assets/shell.css" data-shell>
+<style id="theme">
+/* @theme:start — generated: proto.py palette --seed #3f7a2e --style tonal */
+:root{
+  --primary:#306b20;--on-primary:#ffffff;--primary-container:#b5f39e;--on-primary-container:#0e2000;
+  --secondary:#52634b;--on-secondary:#ffffff;--secondary-container:#d5e8cc;--on-secondary-container:#121f08;
+  --tertiary:#196967;--on-tertiary:#ffffff;--tertiary-container:#a6f0ed;--on-tertiary-container:#00201f;
+  --error:#bf0031;--on-error:#ffffff;--error-container:#ffdad8;--on-error-container:#410004;
+  --surface:#f6fbf4;--surface-dim:#d7dbd4;--surface-bright:#f6fbf4;--surface-container-lowest:#ffffff;
+  --surface-container-low:#f0f5ee;--surface-container:#eaefe8;--surface-container-high:#e5e9e3;--surface-container-highest:#dfe4dd;
+  --on-surface:#191c18;--on-surface-variant:#41493e;--outline:#71796d;--outline-variant:#c0c9bc;
+  --inverse-surface:#2e312c;--inverse-on-surface:#edf2eb;--inverse-primary:#9ad683;
+}
+/* @theme:end */
+/* @brand:start — "아침 텃밭": 이른 아침 햇빛 같은 연한 리넨 바탕 · 짙은 흙 · 새싹 초록 한 가지 · 숨 쉬는 씨앗 캐릭터 */
+:root{
+  --font-display:"Hahmlet","Gothic A1",serif;
+  --font-body:"Gothic A1",system-ui,sans-serif;
+  --btn-radius:var(--r-full);--card-radius:16px;--sheet-radius:var(--r-xl);--fab-radius:var(--r-lg);
+  /* linen morning surfaces instead of the generated mint tint */
+  --surface:#f5f2e9;--surface-bright:#faf8f2;--surface-container-lowest:#fffdf8;
+  --surface-container-low:#efebdf;--surface-container:#e9e4d6;--surface-container-high:#e2dccc;--surface-container-highest:#dbd4c2;
+  --on-surface:#1d1b16;--on-surface-variant:#4d4639;--outline:#7f7667;--outline-variant:#d3cab7;
+  /* garden materials */
+  --soil:#4a3326;--soil-deep:#38251b;--soil-ink:#f3e7d4;--kraft:#eadcc2;--kraft-deep:#d9c6a3;
+  --leaf:#4f9a3a;--leaf-2:#7cc04f;--seed-ink:#2a1a10;
+}
+/* @brand:end */
+</style>
+<style id="app">
+.screen{--screen-bg:var(--surface)}
+.disp{font-family:var(--font-display)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ── seed character (shared) ─────────────────────────────
+   One SVG per seed: sprout (stem + 2 leaves) above, body + face below.
+   State = classes on the wrapper: .sleep / .awake / .happy · .sprouted   */
+.sd{display:block;width:100%;height:auto;overflow:visible}
+.sd .stem{fill:none;stroke:var(--leaf);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.sd .leaf{fill:var(--leaf-2);stroke:var(--leaf);stroke-width:1.5;transform-box:fill-box;transform:scale(0)}
+.sd .ll{transform-origin:100% 70%}.sd .lr{transform-origin:0% 75%}
+.sd .bd{transform-box:fill-box;transform-origin:50% 100%;animation:breathe 3.4s ease-in-out infinite}
+.sd .shell{stroke:rgba(56,37,27,.45);stroke-width:2}
+.sd .stripe{fill:none;stroke:rgba(56,37,27,.35);stroke-width:2.5;stroke-linecap:round}
+.sd .shine{fill:#fff;opacity:.38}
+.sd .crack{fill:none;stroke:var(--soil-deep);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.sd .face{transform:translate(var(--lx,0px),var(--ly,0px));transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
+.sd .eyes{fill:var(--seed-ink);transform-box:fill-box;transform-origin:center}
+.sd .eyes .hl{fill:#fff}
+.sd .lids,.sd .joy,.sd .mouth{fill:none;stroke:var(--seed-ink);stroke-width:2.4;stroke-linecap:round}
+.sd .lids,.sd .joy{display:none}
+.sd .ck{fill:#e98b78;opacity:.55}
+.sleep .sd .eyes{display:none}.sleep .sd .lids{display:inline}
+.sleep .sd .bd{animation-duration:5s}
+.happy .sd .eyes{display:none}.happy .sd .joy{display:inline}
+.awake .sd .eyes{animation:blink 4.4s infinite}
+.sprouted .sd .stem,.sprouted .sd .crack{stroke-dashoffset:0}
+.sprouted .sd .leaf{transform:none}
+@keyframes breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(1.035,.965)}}
+@keyframes blink{0%,45%,49%,100%{transform:scaleY(1)}47%{transform:scaleY(.1)}}
+/* sleeping z's */
+.zz{position:absolute;pointer-events:none;font:700 14px/1 var(--font-display);color:var(--on-surface-variant)}
+.zz i{position:absolute;font-style:normal;opacity:0;animation:zz 3s ease-out infinite}
+.zz i:nth-child(2){animation-delay:1s;font-size:12px}.zz i:nth-child(3){animation-delay:2s;font-size:11px}
+@keyframes zz{0%{opacity:0;transform:translate(0,0)}20%{opacity:.9}100%{opacity:0;transform:translate(14px,-26px)}}
+:not(.sleep)>.zz{display:none}
+html.still .sd .bd,html.still .sd .eyes,html.still .pk.hint{animation:none!important}
+html.still .zz i{animation:none;opacity:.8}
+html.still .zz i:nth-child(2){transform:translate(8px,-12px);opacity:.6}html.still .zz i:nth-child(3){transform:translate(14px,-22px);opacity:.4}
+.glow{position:absolute;width:220px;height:220px;margin:0 0 0 -110px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(closest-side,rgba(255,226,140,.9),rgba(255,226,140,.35) 55%,rgba(255,226,140,0))}
+.dirt{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--soil);pointer-events:none;z-index:4}
+
+/* ── 1 · name ─────────────────────────────── */
+#name .content{display:flex;flex-direction:column;padding:12px 24px 8px}
+.wm{display:flex;align-items:center;gap:8px;font:700 18px/1 var(--font-display);color:var(--on-surface)}
+.wm svg{width:22px;height:22px}
+.topline{display:flex;align-items:center;justify-content:space-between;min-height:48px}
+.stepper{display:flex;gap:6px;align-items:center}
+.stepper i{width:6px;height:6px;border-radius:3px;background:var(--outline-variant)}
+.stepper i.on{width:18px;background:var(--primary)}
+.hero{position:relative;height:236px;margin:12px -24px 0;cursor:pointer}
+.hero .mound{position:absolute;left:50%;bottom:0;width:220px;height:44px;margin-left:-110px}
+.hero .seed{position:absolute;left:50%;bottom:20px;width:124px;margin-left:-62px}
+.hero .seed .sd{transform-origin:50% 100%}
+.hero .seed .zz{left:74%;top:44%;font-size:18px}
+.bubble{position:absolute;left:calc(50% + 30px);top:96px;max-width:150px;padding:10px 14px;border-radius:18px 18px 18px 4px;
+  background:var(--on-surface);color:var(--surface);font:600 14px/1.35 var(--font-body);opacity:0;transform:translateY(6px) scale(.9);transform-origin:0 100%;
+  transition:opacity .25s,transform .35s cubic-bezier(.3,1.5,.5,1);pointer-events:none}
+.bubble.on{opacity:1;transform:none}
+.nm-h{font:700 30px/1.32 var(--font-display);letter-spacing:-.4px;margin-top:20px}
+.nm-sub{margin-top:10px;color:var(--on-surface-variant);font:var(--body-l)}
+#name-form{margin-top:24px}
+.nm-help{display:flex;justify-content:space-between;padding:4px 16px 0;font:var(--body-s);color:var(--on-surface-variant)}
+.field.error+.nm-help{color:var(--error)}
+#name .field.outlined input{font:500 18px/1 var(--font-body)}
+
+/* ── 2 · pick ─────────────────────────────── */
+#pick .content{padding:4px 16px 16px}
+.pk-h{font:700 26px/1.34 var(--font-display);letter-spacing:-.3px;padding:0 4px}
+.pk-sub{margin:8px 4px 20px;color:var(--on-surface-variant);font:var(--body-m)}
+.packets{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pk{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:112px;padding:20px 10px 10px;border:0;border-radius:6px 6px 14px 14px;
+  background:var(--kraft);color:var(--on-surface);text-align:left;font:inherit;cursor:pointer;overflow:hidden;
+  transition:transform .2s cubic-bezier(.3,1.5,.5,1),box-shadow .2s}
+.pk::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:var(--kraft-deep);
+  -webkit-mask:radial-gradient(circle at 5px 10px,transparent 3.5px,#000 4px) 0 0/10px 10px repeat-x;mask:radial-gradient(circle at 5px 10px,transparent 3.5px,#000 4px) 0 0/10px 10px repeat-x}
+.pk:active{transform:scale(.96)}
+.pk .pk-seed{width:30px;height:33px;transition:opacity .2s,transform .3s}
+.pk .pk-name{font:600 14px/1.3 var(--font-body);word-break:keep-all}
+.pk .pk-when{font:500 12px/1 var(--font-body);color:var(--on-surface-variant);margin-top:auto}
+.pk .pk-done{position:absolute;right:8px;top:16px;width:22px;height:22px;border-radius:50%;background:var(--primary);color:var(--on-primary);
+  display:grid;place-items:center;transform:scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.pk .pk-done .ms{--ms-size:16px}
+.pk.on{background:var(--surface-container-lowest);box-shadow:inset 0 0 0 2px var(--primary)}
+.pk.on::before{background:var(--primary)}
+.pk.on .pk-seed{opacity:.18;transform:translateY(-4px)}
+.pk.on .pk-when{color:var(--primary);font-weight:700}
+.pk.on .pk-done{transform:none}
+.pk.add{background:transparent;box-shadow:inset 0 0 0 1.5px var(--outline);border-radius:14px}
+.pk.add::before{display:none}
+.pk.add .ms{color:var(--primary)}
+.pk.bump{animation:bump .4s}
+@keyframes bump{30%{transform:translateX(-4px)}60%{transform:translateX(4px)}}
+/* garden bed (shared by pick + today) */
+.bed{position:relative;--sw:72px;--sb:44px;--soil-h:60px;height:124px;z-index:3}
+.bed .soil{position:absolute;left:0;right:0;bottom:0;width:100%;height:var(--soil-h);display:block;z-index:2;pointer-events:none}
+.bed .soil path{fill:var(--soil)}
+.bed .seed{position:absolute;bottom:var(--sb);width:var(--sw);margin-left:calc(var(--sw) / -2);z-index:1;background:none;border:0;padding:0;cursor:default}
+.bed .seed .zz{left:70%;top:52%}
+.bed .dimple{position:absolute;bottom:calc(var(--soil-h) - 16px);width:30px;height:7px;margin-left:-15px;border-radius:50%;background:var(--soil-deep);z-index:3;transition:opacity .3s}
+.bed .dimple.used{opacity:0}
+.bed .lab{position:absolute;bottom:12px;width:104px;margin-left:-52px;text-align:center;font:600 12px/1.25 var(--font-body);color:var(--soil-ink);z-index:3;
+  word-break:keep-all;animation:fadeUp .4s both}
+.bed-wrap{flex:none;padding:0 16px;margin-top:-4px;position:relative;z-index:3}
+.bed-head{display:flex;justify-content:space-between;align-items:baseline;padding:10px 4px 0;font:600 13px/1 var(--font-body);color:var(--on-surface-variant)}
+.bed-head .num{color:var(--on-surface)}
+#pick .bottom-bar{background:var(--soil);padding-top:4px}
+#pick{--screen-bg:var(--surface)}#pick.screen{background:linear-gradient(to top,var(--soil) 0 60px,var(--surface) 60px)}
+#pick .bottom-bar .btn{background:var(--leaf-2);color:#14240b}
+#pick .bottom-bar .btn:disabled{background:var(--soil-deep);color:#cdbba3;opacity:1}
+#pick{--screen-bg:var(--surface)}
+#pick .bed-wrap .bed{margin:0 -16px}
+.gesture-bar{z-index:6}
+
+/* ── 3 · today ────────────────────────────── */
+#today .content{padding-bottom:16px}
+.garden{position:relative;padding:4px 20px 0;background:radial-gradient(120% 70% at 78% 0%,#fdf0c8 0,rgba(253,240,200,0) 60%)}
+.gd-date{font:600 13px/1 var(--font-body);color:var(--on-surface-variant);padding-top:6px}
+.gd-msg{font:700 22px/1.4 var(--font-display);letter-spacing:-.2px;margin-top:10px;min-height:62px}
+.gd-msg em{font-style:normal;color:var(--primary)}
+#today .bed{height:262px;--sw:96px;--sb:70px;--soil-h:96px;margin:0 -20px}
+#today .bed .seed{cursor:pointer}
+#today .bed .lab{bottom:18px;font-size:13px}
+.tap-hint{position:absolute;bottom:calc(var(--sb) + 132px);width:120px;margin-left:-60px;text-align:center;font:600 12px/1 var(--font-body);color:var(--primary);z-index:3;animation:hint 1.6s ease-in-out infinite}
+.tap-hint .ms{--ms-size:16px;vertical-align:-3px}
+@keyframes hint{50%{transform:translateY(-4px)}}
+html.still .tap-hint{animation:none}
+.td-list{padding:0 4px}
+.td-row{display:flex;align-items:center;gap:14px;padding:10px 12px 10px 16px;min-height:72px}
+.td-row .ic{width:44px;height:44px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--kraft);color:var(--soil)}
+.td-row .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.td-row .hd{font:600 16px/1.3 var(--font-body)}
+.td-row .sp{font:var(--body-m);color:var(--on-surface-variant)}
+.td-row.done .sp{color:var(--primary);font-weight:600}
+.ck-btn{width:48px;height:48px;border-radius:50%;border:0;background:none;display:grid;place-items:center;cursor:pointer;flex:none}
+.ck-btn i{width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--outline);display:grid;place-items:center;transition:background .25s,box-shadow .25s,transform .3s cubic-bezier(.3,1.6,.5,1)}
+.ck-btn .ms{--ms-size:22px;color:var(--on-primary);transform:scale(0);transition:transform .3s .1s cubic-bezier(.3,1.6,.5,1)}
+.td-row.done .ck-btn i{background:var(--primary);box-shadow:none;transform:scale(1.06)}
+.td-row.done .ck-btn .ms{transform:none}
+.td-row+.td-row{box-shadow:inset 0 1px 0 var(--outline-variant)}
+.td-note{display:flex;gap:8px;margin:12px 20px 0;padding:12px 14px;border-radius:12px;background:var(--surface-container-low);font:var(--body-m);color:var(--on-surface-variant)}
+.td-note .ms{--ms-size:20px;color:var(--leaf);flex:none}
+#today .section-title{padding-top:20px}
+.done-bar{flex-direction:column;align-items:stretch;gap:12px;background:var(--surface-container-lowest)!important;box-shadow:0 -1px 0 var(--outline-variant);animation:fadeUp .5s both}
+.done-bar p{font:var(--body-m);color:var(--on-surface-variant);display:flex;gap:8px;align-items:flex-start}
+.done-bar p .ms{--ms-size:20px;color:var(--primary)}
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="device" data-time="7:42">
+  <div class="screens">
+
+    <!-- 1 · 이름 -->
+    <section class="screen" id="name" data-start data-title="이름 입력">
+      <div class="content">
+        <div class="topline">
+          <div class="wm"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V12" stroke="#4f9a3a" stroke-width="2.4" stroke-linecap="round"/><path d="M12 12C10 7 6 6 3 7c1 4 5 6 9 5Z" fill="#7cc04f"/><path d="M12 12c2-5 6-6 9-5-1 4-5 6-9 5Z" fill="#4f9a3a"/></svg>움틈</div>
+          <div class="stepper" aria-label="3단계 중 1단계"><i class="on"></i><i></i><i></i></div>
+        </div>
+        <div class="hero" id="hero" data-action="pokeHero" role="button" aria-label="씨앗 깨우기">
+          <svg class="mound" viewBox="0 0 220 44" aria-hidden="true"><path d="M0 44C30 14 70 4 110 4s80 10 110 40Z" fill="#4a3326"/></svg>
+          <div class="seed sleep" id="hero-seed"></div>
+          <div class="bubble" id="hero-bubble" aria-live="polite"></div>
+        </div>
+        <h1 class="nm-h">처음 오셨네요.<br>뭐라고 불러 드릴까요?</h1>
+        <p class="nm-sub">이름을 알려 주시면 씨앗이 깨어나요.</p>
+        <form id="name-form" data-action="saveName" data-go="pick" novalidate>
+          <label class="field outlined" id="name-field"><input id="name-input" name="nm" maxlength="8" autocomplete="off" placeholder=" " data-js><span class="label">이름</span></label>
+          <div class="nm-help"><span id="name-msg">1~8자, 한글·영문·숫자</span><span class="num" id="name-count">0/8</span></div>
+        </form>
+      </div>
+      <div class="bottom-bar"><button class="btn block lg" type="submit" form="name-form" data-links="pick">다음</button></div>
+    </section>
+
+    <!-- 2 · 습관 고르기 (씨앗 심기) -->
+    <section class="screen" id="pick" data-title="습관 고르기">
+      <header class="top-app-bar">
+        <button class="icon-btn" data-back aria-label="뒤로"><span class="ms">arrow_back</span></button>
+        <h1 class="title"></h1>
+        <div class="actions"><div class="stepper" aria-label="3단계 중 2단계" style="margin-right:16px"><i></i><i class="on"></i><i></i></div></div>
+      </header>
+      <div class="content">
+        <h1 class="pk-h"><span class="who">지우</span>님, 어떤 습관을<br>심어 볼까요?</h1>
+        <p class="pk-sub">처음엔 3개까지만요. 작게 시작해야 잘 자라요.</p>
+        <div class="packets" id="packets"></div>
+      </div>
+      <div class="bed-wrap">
+        <div class="bed-head" data-overlap-ok><span>내 텃밭</span><span>심은 씨앗 <b class="num" id="bed-count">0</b>/3</span></div>
+        <div class="bed" id="pick-bed"></div>
+      </div>
+      <div class="bottom-bar"><button class="btn block lg" id="pick-cta" data-action="startGarden" data-links="today" disabled>씨앗을 골라 주세요</button></div>
+    </section>
+
+    <!-- 3 · 오늘 (첫 체크) -->
+    <section class="screen" id="today" data-title="첫 체크" data-no-up>
+      <header class="top-app-bar">
+        <h1 class="title"><span class="who">지우</span>님의 텃밭</h1>
+      </header>
+      <div class="content">
+        <div class="garden">
+          <div class="gd-date">10월 14일 화요일 · 첫날</div>
+          <p class="gd-msg" id="gd-msg"></p>
+          <div class="bed" id="today-bed"></div>
+        </div>
+        <div class="section-title">오늘 할 일</div>
+        <div class="td-list" id="td-list"></div>
+        <p class="td-note"><span class="ms fill">spa</span><span>하루 빠져도 시들지 않아요. 씨앗은 다음 체크까지 기다려 줘요.</span></p>
+      </div>
+      <div class="bottom-bar done-bar" id="done-bar" hidden>
+        <p><span class="ms fill">eco</span><span id="done-text">첫 싹이 텄어요. 내일 또 체크하면 본잎이 한 장 더 나요.</span></p>
+        <button class="btn block lg" data-action="finishFlow">내일 또 올게요</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="overlays">
+    <div class="sheet" id="custom-sheet">
+      <div class="sheet-title">나만의 습관 심기</div>
+      <form class="sheet-body pad" id="custom-form" data-action="addCustom" novalidate>
+        <label class="field" id="custom-field"><input id="custom-input" maxlength="12" placeholder=" " autocomplete="off" data-js><span class="label">습관 이름</span><span class="support" id="custom-msg">예: 출근길 계단 오르기 · 최대 12자</span></label>
+        <div class="t-label-l muted" style="margin:16px 0 8px">언제 하나요?</div>
+        <div class="chip-row" data-single id="custom-when">
+          <button type="button" class="chip selected" data-chip>매일 아침</button>
+          <button type="button" class="chip" data-chip>매일 낮</button>
+          <button type="button" class="chip" data-chip>매일 저녁</button>
+          <button type="button" class="chip" data-chip>매일 밤</button>
+        </div>
+        <div class="sheet-actions" style="padding:20px 0 8px"><button type="button" class="btn text" data-close>취소</button><span class="grow"></span><button class="btn" type="submit">씨앗 만들기</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="../../assets/shell.js" data-shell></script>
+<script id="app-js">
+var SHOT = App.shot, FILM = App.mode === 'film', CALM = App.reducedMotion;
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function $(id) { return document.getElementById(id); }
+function anim(el, frames, opts) { if (!el || SHOT || CALM) return null; return el.animate(frames, opts); }
+
+/* ── seed character ─────────────────────────────────────── */
+var BODY = {
+  almond: 'M50 80C67 88 75 102 73 116C71 130 61 137 50 137S29 130 27 116C25 102 33 88 50 80Z',
+  bean: 'M50 85C68 85 77 97 77 112S66 137 50 137 23 127 23 112 32 85 50 85Z',
+  sun: 'M50 77C63 87 70 102 69 116S60 137 50 137 31 130 31 116 37 87 50 77Z'
+};
+function seedSVG(h, vb) {
+  var stripes = h.type === 'sun' ? '<path class="stripe" d="M42 92C38 104 38 122 41 133M58 92C62 104 62 122 59 133"/>' : '';
+  return '<svg class="sd" viewBox="' + (vb || '0 0 100 140') + '" aria-hidden="true">' +
+    '<g class="sprout"><path class="stem" pathLength="1" d="M50 86C50 68 45 54 51 36"/>' +
+    '<path class="leaf ll" d="M51 36C40 22 22 22 14 31C25 42 42 43 51 36Z"/><path class="leaf lr" d="M51 36C60 20 80 16 88 24C81 37 63 42 51 36Z"/></g>' +
+    '<g class="bd"><path class="shell" fill="' + h.color + '" d="' + BODY[h.type] + '"/>' + stripes +
+    '<ellipse class="shine" cx="39" cy="98" rx="5" ry="9" transform="rotate(18 39 98)"/>' +
+    '<path class="crack" pathLength="1" d="M41 88l4.5 5 4.5-5 4.5 5 4.5-5"/>' +
+    '<g class="face"><g class="eyes"><ellipse cx="41" cy="110" rx="3.6" ry="4.8"/><ellipse cx="59" cy="110" rx="3.6" ry="4.8"/>' +
+    '<circle class="hl" cx="42.3" cy="108.2" r="1.3"/><circle class="hl" cx="60.3" cy="108.2" r="1.3"/></g>' +
+    '<path class="lids" d="M37 110q4 3.5 8 0M55 110q4 3.5 8 0"/><path class="joy" d="M37 112q4-5.5 8 0M55 112q4-5.5 8 0"/>' +
+    '<path class="mouth" d="M47 119q3 2.6 6 0"/><circle class="ck" cx="33" cy="118" r="4"/><circle class="ck" cx="67" cy="118" r="4"/></g></g></svg>';
+}
+function mood(el, m) { el.classList.remove('sleep', 'awake', 'happy'); el.classList.add(m); }
+function dirt(bed, xPct, fromBottom, n, spread) {
+  if (SHOT || CALM) return;
+  for (var i = 0; i < n; i++) {
+    var d = document.createElement('i'); d.className = 'dirt';
+    d.style.left = xPct + '%'; d.style.bottom = fromBottom + 'px';
+    var s = 4 + Math.random() * 5; d.style.width = d.style.height = s + 'px';
+    bed.appendChild(d);
+    var dx = (Math.random() - .5) * spread, up = 18 + Math.random() * 26;
+    var a = d.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + dx * .6 + 'px,' + (-up) + 'px)', offset: .45 },
+      { transform: 'translate(' + dx + 'px,6px)', opacity: 0 }], { duration: 620 + Math.random() * 200, easing: 'cubic-bezier(.2,.6,.4,1)' });
+    a.onfinish = (function (el) { return function () { el.remove(); }; })(d);
+  }
+}
+
+/* ── data ───────────────────────────────────────────────── */
+var HABITS = [
+  { name: '아침에 물 한 잔', short: '물 한 잔', when: '매일 아침', icon: 'water_drop', type: 'almond', color: '#d9a35b' },
+  { name: '스트레칭 5분', short: '스트레칭', when: '매일 아침', icon: 'self_improvement', type: 'bean', color: '#a9693e' },
+  { name: '자기 전 책 10쪽', short: '책 10쪽', when: '매일 밤', icon: 'menu_book', type: 'sun', color: '#e4c27c' },
+  { name: '한 줄 일기', short: '한 줄 일기', when: '매일 밤', icon: 'edit_note', type: 'almond', color: '#c47b4b' },
+  { name: '20분 걷기', short: '20분 걷기', when: '매일 저녁', icon: 'directions_walk', type: 'bean', color: '#8b5b3d' },
+  { name: '영양제 챙기기', short: '영양제', when: '매일 아침', icon: 'medication', type: 'sun', color: '#d29663' },
+  { name: '폰 없이 잠들기', short: '폰 없이 잠', when: '매일 밤', icon: 'bedtime', type: 'almond', color: '#9c6b49' },
+  { name: '영어 단어 10개', short: '단어 10개', when: '매일 낮', icon: 'translate', type: 'bean', color: '#c99a68' }
+];
+var CUSTOM_LOOK = [{ type: 'sun', color: '#cfa36f' }, { type: 'almond', color: '#b98552' }, { type: 'bean', color: '#a77a55' }];
+App.state.name = '';
+App.state.picked = [];          // habit indices, in planting order (= slot order)
+App.state.checked = {};         // habit index → true
+function who() { return esc(App.state.name || '지우'); }
+function paintNames() { document.querySelectorAll('.who').forEach(function (el) { el.textContent = App.state.name || '지우'; }); }
+
+/* ── 1 · name: the seed is a small state machine ─────────────
+   inputs: focus · text length · valid · bad submit · tap
+   states: sleep → awake (looks at what you type) → happy (valid name)  */
+var hero = $('hero-seed'), bubble = $('hero-bubble'), nameIn = $('name-input'), sleepT = 0;
+hero.innerHTML = seedSVG({ type: 'almond', color: '#d9a35b' }) + '<span class="zz" aria-hidden="true" data-overlap-ok><i>Z</i><i>z</i><i>z</i></span>';
+var NAME_RE = /^[가-힣a-zA-Z0-9 ]{1,8}$/;
+function say(t) { bubble.textContent = t; bubble.classList.toggle('on', !!t); }
+function hop(h) { anim(hero, [{ transform: 'translateY(0) scale(1,1)' }, { transform: 'translateY(4px) scale(1.08,.9)', offset: .2 },
+  { transform: 'translateY(-' + (h || 22) + 'px) scale(.94,1.08)', offset: .5 }, { transform: 'translateY(2px) scale(1.06,.94)', offset: .82 }, { transform: 'none' }],
+  { duration: 560, easing: 'ease-out' }); }
+function wake() {
+  clearTimeout(sleepT);
+  if (!hero.classList.contains('sleep')) return;
+  mood(hero, 'awake'); hop(26); say('앗, 누구세요?');
+}
+function heroRead(showErr) {
+  var v = nameIn.value, t = v.trim(), ok = NAME_RE.test(t) && t.length >= 1;
+  var bad = t && !/^[가-힣a-zA-Z0-9 ]*$/.test(t);
+  $('name-count').textContent = v.length + '/8';
+  $('name-field').classList.toggle('error', !!(bad || (showErr && !ok)));
+  $('name-msg').textContent = bad ? '한글·영문·숫자만 쓸 수 있어요' : (showErr && !ok) ? '이름을 한 글자 이상 적어 주세요' : '1~8자, 한글·영문·숫자';
+  // look at the end of the text: eyes travel left → right as the name grows, slightly down toward the field
+  var f = Math.min(1, v.length / 7);
+  hero.style.setProperty('--lx', (-5 + 10 * f).toFixed(1) + 'px');
+  hero.style.setProperty('--ly', v.length ? '4px' : '0px');
+  if (ok) { if (!hero.classList.contains('happy')) hop(14); mood(hero, 'happy'); say(t + '님, 반가워요!'); }
+  else if (!hero.classList.contains('sleep')) { mood(hero, 'awake'); say(bad ? '그건 못 읽겠어요…' : t ? '…' : '이름이 뭐예요?'); }
+  return ok;
+}
+function typeTick() { anim(hero.querySelector('.bd'), [{ transform: 'scale(1,1)' }, { transform: 'scale(1.05,.94)' }, { transform: 'scale(1,1)' }], { duration: 180 }); }
+nameIn.addEventListener('focus', wake);
+nameIn.addEventListener('input', function () { wake(); typeTick(); heroRead(false); });
+nameIn.addEventListener('blur', function () {
+  if (nameIn.value.trim()) return;
+  sleepT = setTimeout(function () { if (!nameIn.value.trim() && document.activeElement !== nameIn) { mood(hero, 'sleep'); say(''); hero.style.setProperty('--ly', '0px'); } }, 2600);
+});
+App.actions.pokeHero = function () {
+  if (hero.classList.contains('sleep')) { wake(); nameIn.focus(); return; }
+  hop(18);
+};
+App.actions.saveName = function () {
+  if (!heroRead(true)) {
+    wake(); say('이름을 먼저 알려 주세요');
+    anim(hero, [{ transform: 'rotate(0)' }, { transform: 'rotate(-9deg)' }, { transform: 'rotate(8deg)' }, { transform: 'rotate(-5deg)' }, { transform: 'rotate(0)' }], { duration: 480 });
+    nameIn.focus(); return false;
+  }
+  App.state.name = nameIn.value.trim(); paintNames();
+};
+
+/* ── 2 · pick: choosing a habit plants its seed ───────────── */
+var SLOTS = [20, 50, 80];
+function renderPackets() {
+  $('packets').innerHTML = HABITS.map(function (h, i) {
+    var on = App.state.picked.indexOf(i) >= 0;
+    return '<button class="pk' + (on ? ' on' : '') + '" data-action="toggleHabit" data-i="' + i + '" aria-pressed="' + on + '">' +
+      '<span class="pk-seed">' + seedSVG(h, '20 74 60 66') + '</span><span class="pk-name">' + esc(h.name) + '</span>' +
+      '<span class="pk-when">' + (on ? '심었어요' : h.when) + '</span><span class="pk-done"><span class="ms">check</span></span></button>';
+  }).join('') + '<button class="pk add" data-sheet="custom-sheet"><span class="ms">add</span><span class="pk-name">직접 쓰기</span><span class="pk-when">나만의 습관</span></button>';
+}
+function bedShell(bed, slots, dimples) {
+  bed.innerHTML = (dimples ? slots.map(function (x, k) { return '<i class="dimple" data-k="' + k + '" style="left:' + x + '%"></i>'; }).join('') : '') +
+    '<svg class="soil" viewBox="0 0 380 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V12C70 4 130 2 190 2S310 4 380 12V70Z"/></svg>';
+}
+function seedEl(i, x, tag) {
+  var h = HABITS[i], el = document.createElement(tag || 'div');
+  el.className = 'seed sleep'; el.style.left = x + '%'; el.setAttribute('data-i', i);
+  el.innerHTML = seedSVG(h) + '<span class="zz" aria-hidden="true" data-overlap-ok><i>Z</i><i>z</i><i>z</i></span>';
+  return el;
+}
+function labEl(i, x) { var l = document.createElement('span'); l.className = 'lab'; l.style.left = x + '%'; l.setAttribute('data-i', i); l.textContent = HABITS[i].short; return l; }
+function renderPickBed() {
+  var bed = $('pick-bed'); bedShell(bed, SLOTS, true);
+  App.state.picked.forEach(function (i, k) { bed.appendChild(seedEl(i, SLOTS[k])); bed.appendChild(labEl(i, SLOTS[k])); bed.querySelector('.dimple[data-k="' + k + '"]').classList.add('used'); });
+}
+function syncPickUI() {
+  var n = App.state.picked.length, cta = $('pick-cta');
+  $('bed-count').textContent = n;
+  cta.disabled = !n;
+  cta.textContent = n ? '씨앗 ' + n + '개 심고 시작하기' : '씨앗을 골라 주세요';
+}
+function scaleOf() { var d = document.querySelector('.device'); return d.getBoundingClientRect().width / d.offsetWidth || 1; }
+function plant(i, fromEl) {
+  var k = App.state.picked.length; App.state.picked.push(i);
+  var bed = $('pick-bed'), x = SLOTS[k], el = seedEl(i, x);
+  bed.appendChild(el);
+  var lab = labEl(i, x); bed.appendChild(lab);
+  bed.querySelector('.dimple[data-k="' + k + '"]').classList.add('used');
+  if (fromEl && !SHOT && !CALM) {
+    var s = scaleOf(), a = fromEl.getBoundingClientRect(), b = el.getBoundingClientRect();
+    var dx = (a.left + a.width / 2 - (b.left + b.width / 2)) / s, dy = (a.top + a.height / 2 - (b.top + b.height * .78)) / s;
+    var peak = Math.min(dy * .5, -40) - 70, spin = dx > 0 ? -1 : 1;
+    // seed is tossed from the packet in an arc, lands, squashes into the soil
+    el.animate([
+      { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.5) rotate(0deg)' },
+      { transform: 'translate(' + dx * .45 + 'px,' + peak + 'px) scale(.85) rotate(' + spin * 200 + 'deg)', offset: .42 },
+      { transform: 'translate(0,-30px) scale(1) rotate(' + spin * 350 + 'deg)', offset: .76, easing: 'cubic-bezier(.5,0,1,1)' },
+      { transform: 'translate(0,3px) scale(1.18,.8) rotate(' + spin * 360 + 'deg)', offset: .88 },
+      { transform: 'translate(0,0) scale(1,1) rotate(' + spin * 360 + 'deg)' }
+    ], { duration: 980, easing: 'cubic-bezier(.3,.1,.4,1)' });
+    lab.style.animationDelay = '.85s';
+    setTimeout(function () { dirt(bed, x, 54, 7, 60); }, 850);
+  }
+  syncPickUI();
+}
+function unplant(i) {
+  var k = App.state.picked.indexOf(i), bed = $('pick-bed');
+  var el = bed.querySelector('.seed[data-i="' + i + '"]');
+  App.state.picked.splice(k, 1);
+  if (el && !SHOT && !CALM) {
+    dirt(bed, SLOTS[k], 54, 5, 40);
+    var a = el.animate([{ transform: 'none' }, { transform: 'translateY(-46px) rotate(-30deg) scale(.9)', offset: .5 }, { transform: 'translateY(-20px) scale(.3)', opacity: 0 }], { duration: 420, easing: 'ease-out', fill: 'forwards' });
+    a.onfinish = function () { relayout(); };
+  } else relayout();
+  syncPickUI();
+}
+function relayout() {
+  // remaining seeds shuffle left so slots stay in planting order
+  var bed = $('pick-bed'), before = {};
+  bed.querySelectorAll('.seed').forEach(function (s) { before[s.getAttribute('data-i')] = s.getBoundingClientRect().left; });
+  renderPickBed();
+  var sc = scaleOf();
+  bed.querySelectorAll('.seed').forEach(function (s) {
+    var b = before[s.getAttribute('data-i')]; if (b == null) return;
+    var d = (b - s.getBoundingClientRect().left) / sc;
+    if (d) anim(s, [{ transform: 'translateX(' + d + 'px)' }, { transform: 'translateX(' + d * .5 + 'px) translateY(-14px)', offset: .5 }, { transform: 'none' }], { duration: 420, easing: 'ease-in-out' });
+  });
+}
+App.actions.toggleHabit = function (el) {
+  var i = +el.getAttribute('data-i'), on = App.state.picked.indexOf(i) >= 0;
+  if (!on && App.state.picked.length >= 3) {
+    el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+    App.snack('처음엔 3개까지만 심을 수 있어요. 하나를 빼고 골라 주세요');
+    return;
+  }
+  if (on) unplant(i); else plant(i, el.querySelector('.pk-seed'));
+  el.classList.toggle('on', !on); el.setAttribute('aria-pressed', String(!on));
+  el.querySelector('.pk-when').textContent = !on ? '심었어요' : HABITS[i].when;
+};
+App.actions.addCustom = function () {
+  var v = $('custom-input').value.trim();
+  if (v.length < 2) { $('custom-field').classList.add('error'); $('custom-msg').textContent = '두 글자 이상 적어 주세요'; $('custom-input').focus(); return false; }
+  var when = (document.querySelector('#custom-when .chip.selected') || {}).textContent || '매일';
+  var look = CUSTOM_LOOK[HABITS.length % 3];
+  HABITS.push({ name: v, short: v.length > 6 ? v.slice(0, 6) + '…' : v, when: when, icon: 'eco', type: look.type, color: look.color, custom: true });
+  $('custom-input').value = ''; $('custom-field').classList.remove('error'); $('custom-msg').textContent = '예: 출근길 계단 오르기 · 최대 12자';
+  App.close(); renderPackets();
+  var i = HABITS.length - 1;
+  if (App.state.picked.length < 3) { App.after(260, function () { App.actions.toggleHabit(document.querySelector('.pk[data-i="' + i + '"]')); }); }
+  else App.snack('‘' + v + '’ 씨앗을 만들었어요. 하나를 빼면 심을 수 있어요');
+};
+App.actions.startGarden = function () { if (!App.state.picked.length) return false; App.state.checked = {}; App.reset('today'); };
+App.onEnter('pick', function () { paintNames(); });
+
+/* ── 3 · today: the first check makes the seed sprout ────────── */
+function todaySlots(n) { return n === 1 ? [50] : n === 2 ? [32, 68] : [18, 50, 82]; }
+function picked() { return App.state.picked.length ? App.state.picked : [0, 2, 5]; }
+function renderToday() {
+  var list = picked(), slots = todaySlots(list.length), bed = $('today-bed');
+  bedShell(bed, slots, false);
+  list.forEach(function (i, k) {
+    var s = seedEl(i, slots[k], 'button');
+    s.setAttribute('data-action', 'check'); s.setAttribute('aria-label', HABITS[i].name + ' 체크');
+    if (App.state.checked[i]) { s.classList.add('sprouted'); mood(s, 'happy'); }
+    bed.appendChild(s); bed.appendChild(labEl(i, slots[k]));
+  });
+  var any = Object.keys(App.state.checked).length;
+  if (!any) bed.insertAdjacentHTML('beforeend', '<span class="tap-hint" style="left:' + slots[0] + '%"><span class="ms">touch_app</span> 눌러서 체크</span>');
+  $('td-list').innerHTML = list.map(function (i) {
+    var h = HABITS[i], done = !!App.state.checked[i];
+    return '<div class="td-row' + (done ? ' done' : '') + '" data-row="' + i + '"><span class="ic" style="background:' + h.color + '33"><span class="ms">' + h.icon + '</span></span>' +
+      '<span class="body"><span class="hd">' + esc(h.name) + '</span><span class="sp">' + (done ? '싹이 텄어요 · 방금' : h.when + ' · 아직 씨앗') + '</span></span>' +
+      '<button class="ck-btn" data-action="check" data-i="' + i + '" aria-label="' + esc(h.name) + ' 체크" aria-pressed="' + done + '"><i><span class="ms">check</span></i></button></div>';
+  }).join('');
+  paintToday();
+}
+function paintToday() {
+  var n = Object.keys(App.state.checked).length, total = picked().length;
+  $('gd-msg').innerHTML = !n ? '씨앗 ' + total + '개가 자고 있어요.<br>하나만 해내도 <em>싹이 터요.</em>'
+    : n === total ? '오늘 다 해냈어요!<br><em>' + total + '개 모두</em> 싹이 텄어요.'
+    : '<em>첫 싹</em>이 텄어요!<br>' + who() + '님이 해낸 만큼 자라요.';
+  $('done-bar').hidden = !n;
+  App.state.firstDone = n > 0;
+}
+function sprout(s, i) {
+  s.classList.add('sprouted'); mood(s, 'awake');
+  s.style.setProperty('--ly', '-3px');
+  var q = function (sel) { return s.querySelector(sel); };
+  if (!SHOT && !CALM) {
+    // 0–0.45s wiggle awake · 0.45 crack · 0.55–1.15 stem rises · 1.0–1.6 leaves unfurl · 1.6 joy
+    s.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-8deg)' }, { transform: 'rotate(7deg)' }, { transform: 'rotate(-5deg)' }, { transform: 'translateY(-10px) scale(.95,1.07)', offset: .8 }, { transform: 'none' }], { duration: 560, easing: 'ease-in-out' });
+    q('.crack').animate({ strokeDashoffset: [1, 0] }, { duration: 220, delay: 420, fill: 'backwards' });
+    q('.stem').animate({ strokeDashoffset: [1, 0] }, { duration: 620, delay: 540, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'backwards' });
+    q('.ll').animate([{ transform: 'scale(0) rotate(40deg)' }, { transform: 'scale(1.18) rotate(-6deg)', offset: .65 }, { transform: 'none' }], { duration: 640, delay: 980, easing: 'ease-out', fill: 'backwards' });
+    q('.lr').animate([{ transform: 'scale(0) rotate(-40deg)' }, { transform: 'scale(1.18) rotate(6deg)', offset: .65 }, { transform: 'none' }], { duration: 640, delay: 1080, easing: 'ease-out', fill: 'backwards' });
+    var bed = $('today-bed'); setTimeout(function () { dirt(bed, parseFloat(s.style.left), 92, 9, 80); }, 520);
+    // warm light swells behind the seed while it breaks open, then fades: "you did this"
+    var g = document.createElement('i'); g.className = 'glow'; g.style.left = s.style.left; g.style.bottom = '40px'; bed.appendChild(g);
+    g.animate([{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1)', opacity: 1, offset: .45 }, { transform: 'scale(1.25)', opacity: 0 }], { duration: 1700, delay: 380, easing: 'ease-out', fill: 'both' });
+    setTimeout(function () { if (s.classList.contains('sprouted')) { mood(s, 'happy'); anim(s, [{ transform: 'none' }, { transform: 'translateY(-8px)' }, { transform: 'none' }], { duration: 360, easing: 'ease-out' }); } }, 1650);
+  } else mood(s, 'happy');
+}
+function unsprout(s) { s.classList.remove('sprouted'); mood(s, 'sleep'); s.style.setProperty('--ly', '0px'); }
+App.actions.check = function (el) {
+  var i = +el.getAttribute('data-i'), row = document.querySelector('.td-row[data-row="' + i + '"]'), s = document.querySelector('#today-bed .seed[data-i="' + i + '"]');
+  var hint = document.querySelector('#today .tap-hint'); if (hint) hint.remove();
+  if (App.state.checked[i]) {
+    delete App.state.checked[i]; unsprout(s); row.classList.remove('done');
+    row.querySelector('.sp').textContent = HABITS[i].when + ' · 아직 씨앗'; paintToday(); return;
+  }
+  App.state.checked[i] = true; sprout(s, i); row.classList.add('done');
+  row.querySelector('.sp').textContent = '싹이 텄어요 · 방금';
+  row.querySelector('.ck-btn').setAttribute('aria-pressed', 'true');
+  paintToday();
+};
+App.actions.finishFlow = function () { App.snack('좋아요! 알림·기록 화면은 이 흐름 승인 후 이어서 만들어요'); };
+App.onEnter('today', function () { paintNames(); renderToday(); });
+
+/* ── boot + still/film states ───────────────────────────── */
+App.ready = function () {
+  renderPackets(); renderPickBed(); syncPickUI(); paintNames();
+  if (SHOT) {           // still screenshots show each screen's meaningful moment
+    App.state.picked = [0, 2, 5]; renderPackets(); renderPickBed(); syncPickUI();
+    App.state.checked = { 0: true };
+  }
+};
+if (FILM) {             // proto.py frames: play each signature moment on a fixed script
+  App.onEnter('name', function () {
+    setTimeout(function () { wake(); }, 500);
+    '지우'.split('').forEach(function (c, k) { setTimeout(function () { nameIn.value += c; typeTick(); heroRead(false); }, 1200 + k * 500); });
+  });
+  App.onEnter('pick', function () {
+    // three seeds tossed one after another: arc → land → squash → dirt
+    App.state.picked = []; renderPackets(); renderPickBed(); syncPickUI();
+    [0, 3, 6].forEach(function (i, k) { setTimeout(function () { App.actions.toggleHabit(document.querySelector('.pk[data-i="' + i + '"]')); }, 300 + k * 1100); });
+  });
+  App.onEnter('today', function () {
+    App.state.checked = {}; renderToday();
+    setTimeout(function () { App.actions.check(document.querySelector('.ck-btn[data-i="' + picked()[0] + '"]')); }, 400);
+  });
+}
+</script>
+</body>
+</html>
