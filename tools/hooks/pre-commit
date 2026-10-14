@@ -1,0 +1,11 @@
+#!/bin/sh
+# Block private examples, and words listed in the private companion repo (if present).
+REPO="$(git rev-parse --show-toplevel)"
+WORDS="${PRIVATE_DIR:-$(dirname "$REPO")/android-prototype-private}/private-words.txt"
+bad=$(git diff --cached --name-only | grep "examples/_private")
+if [ -n "$bad" ]; then echo "BLOCKED: private example staged:"; echo "$bad"; exit 1; fi
+if [ -f "$WORDS" ]; then
+  hits=$(git diff --cached -U0 | grep '^+' | grep -i -F -f "$WORDS")
+  if [ -n "$hits" ]; then echo "BLOCKED: private words in staged changes:"; echo "$hits" | head -5; exit 1; fi
+fi
+exit 0

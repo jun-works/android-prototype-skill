@@ -1,0 +1,54 @@
+{
+  "skill_name": "android-prototype",
+  "evals": [
+    {
+      "id": 1,
+      "name": "eval-1-habit-specific",
+      "prompt": "습관 트래커 앱을 만들려고 해. 인터랙티브 시안부터 확정하고 개발 들어갈 거야. 각 화면은 내 승인 받고 다음으로 넘어갈 거니까 시안은 html로 만들어줘. 일단 첫 실행 흐름만: 이름 입력 → 만들고 싶은 습관 고르기 → 첫 체크 완료까지. https://rive.app 의 살아있는 캐릭터 모션에서 영감 받고 싶어. 습관을 고르면 작은 씨앗들이 화면에 심어지고, 첫 체크를 하면 그게 싹트는 느낌이었으면 좋겠어.",
+      "expected_output": "Builds only the requested first-run flow (3-5 screens), not a whole app; Has a signature moment tied to the product (seeds planted on pick, sprouting on first check); Extracts principles from the reference rather than copying it, and credits it; Checks motion over time (filmstrip / frames) and the audit has 0 errors; Creates DESIGN_NOTES.md with a flow map / direction; Stops after the flow and asks for approval before continuing; No generic AI look: no emoji icons, no purple default, no swipe-carousel onboarding; Korean UI copy in 해요체",
+      "files": [],
+      "assertions": [
+        "Builds only the requested first-run flow (3-5 screens), not a whole app",
+        "Has a signature moment tied to the product (seeds planted on pick, sprouting on first check)",
+        "Extracts principles from the reference rather than copying it, and credits it",
+        "Checks motion over time (filmstrip / frames) and the audit has 0 errors",
+        "Creates DESIGN_NOTES.md with a flow map / direction",
+        "Stops after the flow and asks for approval before continuing",
+        "No generic AI look: no emoji icons, no purple default, no swipe-carousel onboarding",
+        "Korean UI copy in 해요체"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "eval-2-dogwalk-thin",
+      "prompt": "반려견 산책 기록 앱 시안 만들어줘",
+      "expected_output": "Does not build a full multi-screen app straight away; Proposes 2-3 directions or concepts concisely, with a recommendation; Proposes signature-moment ideas tied to dog walking (not generic decoration); Lays out the flow map / first flow screens; Asks at most 3 questions and waits for the user",
+      "files": [],
+      "assertions": [
+        "Does not build a full multi-screen app straight away",
+        "Proposes 2-3 directions or concepts concisely, with a recommendation",
+        "Proposes signature-moment ideas tied to dog walking (not generic decoration)",
+        "Lays out the flow map / first flow screens",
+        "Asks at most 3 questions and waits for the user"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "eval-3-continue",
+      "prompt": "examples/umteum 에 있는 습관 트래커 시안 이어서 해줘. 첫 실행 흐름은 승인됐어. 다음은 알림 권한이랑 체크 시간 정하는 흐름 만들어줘.",
+      "expected_output": "Reads the existing DESIGN_NOTES and keeps the same visual language (fonts, palette, seed characters); Builds only the notification flow, leaving the approved first-run flow intact; Handles Android specifics (POST_NOTIFICATIONS on API 33+, rationale before the system dialog, denial path to settings); Has a signature moment that explains why notifications help (not a plain system-dialog wall); Checks motion (frames) and the audit has 0 errors; Stops for approval; does not mark the flow approved in DESIGN_NOTES before the user approves; Korean UI copy consistent with the first-run tone",
+      "files": [
+        "examples/umteum/"
+      ],
+      "assertions": [
+        "Reads the existing DESIGN_NOTES and keeps the same visual language (fonts, palette, seed characters)",
+        "Builds only the notification flow, leaving the approved first-run flow intact",
+        "Handles Android specifics (POST_NOTIFICATIONS on API 33+, rationale before the system dialog, denial path to settings)",
+        "Has a signature moment that explains why notifications help (not a plain system-dialog wall)",
+        "Checks motion (frames) and the audit has 0 errors",
+        "Stops for approval; does not mark the flow approved in DESIGN_NOTES before the user approves",
+        "Korean UI copy consistent with the first-run tone"
+      ]
+    }
+  ]
+}

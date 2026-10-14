@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+*-workspace/
+*.audit.json
+
+# Private examples are linked in by tools/setup.sh and never published.
+skills/android-prototype/examples/_private*

@@ -1,0 +1,1607 @@
+<!doctype html>
+<html lang="ko" data-theme="umteum-soil">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>움틈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700&family=Gothic+A1:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Shell runtime: inlined by `proto.py build`. Do not edit the shell files. -->
+<style data-shell>
+/* Android prototype shell — shared by every prototype. Don't edit per app:
+   override in the app's own <style> block. Units: 1px here == 1dp on a 412×915dp phone. */
+
+/* ---------- Defaults (a direction overrides these in its @theme / @brand blocks) ---------- */
+:root{
+  --primary:#36618e;--on-primary:#fff;--primary-container:#d1e4ff;--on-primary-container:#001d36;
+  --secondary:#535f70;--on-secondary:#fff;--secondary-container:#d7e3f7;--on-secondary-container:#101c2b;
+  --tertiary:#6b5778;--on-tertiary:#fff;--tertiary-container:#f2daff;--on-tertiary-container:#251431;
+  --error:#ba1a1a;--on-error:#fff;--error-container:#ffdad6;--on-error-container:#410002;
+  --surface:#f8f9ff;--surface-dim:#d8dae0;--surface-bright:#f8f9ff;
+  --surface-container-lowest:#fff;--surface-container-low:#f2f3fa;--surface-container:#eceef4;
+  --surface-container-high:#e6e8ee;--surface-container-highest:#e1e2e8;
+  --on-surface:#191c20;--on-surface-variant:#43474e;--outline:#73777f;--outline-variant:#c3c7cf;
+  --inverse-surface:#2e3135;--inverse-on-surface:#eff0f7;--inverse-primary:#a0cafd;
+
+  --font-display:"Roboto Flex","Noto Sans KR",system-ui,sans-serif;
+  --font-body:"Roboto Flex","Noto Sans KR",system-ui,sans-serif;
+  --r-xs:4px;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:28px;--r-full:999px;
+  --btn-radius:var(--r-full);--card-radius:var(--r-md);--sheet-radius:var(--r-xl);--fab-radius:var(--r-lg);
+
+  --elev-1:0 1px 2px rgba(0,0,0,.18),0 1px 3px 1px rgba(0,0,0,.08);
+  --elev-2:0 1px 2px rgba(0,0,0,.18),0 2px 6px 2px rgba(0,0,0,.08);
+  --elev-3:0 4px 8px 3px rgba(0,0,0,.10),0 1px 3px rgba(0,0,0,.18);
+
+  /* M3 type scale (weight size/line-height family) */
+  --display-l:400 57px/64px var(--font-display);--display-m:400 45px/52px var(--font-display);--display-s:400 36px/44px var(--font-display);
+  --headline-l:400 32px/40px var(--font-display);--headline-m:400 28px/36px var(--font-display);--headline-s:400 24px/32px var(--font-display);
+  --title-l:400 22px/28px var(--font-display);--title-m:500 16px/24px var(--font-body);--title-s:500 14px/20px var(--font-body);
+  --body-l:400 16px/24px var(--font-body);--body-m:400 14px/20px var(--font-body);--body-s:400 12px/16px var(--font-body);
+  --label-l:500 14px/20px var(--font-body);--label-m:500 12px/16px var(--font-body);--label-s:500 11px/16px var(--font-body);
+
+  --status-h:36px;--gesture-h:24px;--nav-h:80px;--appbar-h:64px;--margin:16px;
+}
+
+/* ---------- Page + device frame ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:#e6e4df;font:var(--body-m);color:var(--on-surface);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input,textarea,select{font:inherit;color:inherit;letter-spacing:inherit}
+button{background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:inherit}
+img{display:block;max-width:100%}
+p{margin:0}
+h1,h2,h3,h4{margin:0;font-weight:inherit}
+[hidden]{display:none!important}
+
+.stage{min-height:100%;display:flex;align-items:center;justify-content:center;gap:40px;padding:40px 16px}
+.device{position:relative;flex:none;width:412px;height:915px;border-radius:44px;overflow:hidden;isolation:isolate;
+  background:var(--surface);color:var(--on-surface);font:var(--body-m);
+  box-shadow:0 0 0 10px #18181a,0 0 0 11px #3b3b3f,0 40px 90px -20px rgba(0,0,0,.45)}
+
+.status-bar{position:absolute;top:0;left:0;right:0;height:var(--status-h);z-index:40;pointer-events:none;
+  display:flex;align-items:center;justify-content:space-between;padding:4px 24px 0 28px;
+  font:500 14px/20px "Roboto Flex",system-ui,sans-serif;color:var(--on-surface)}
+.status-bar.light{color:#fff}
+.status-bar .sb-icons{display:flex;gap:4px;align-items:center}
+.status-bar .ms{font-size:17px}
+.status-bar::after{content:"";position:absolute;left:50%;top:10px;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:#111}
+.gesture-bar{position:absolute;left:0;right:0;bottom:0;height:var(--gesture-h);z-index:40;pointer-events:none;display:grid;place-items:center}
+.gesture-bar::before{content:"";width:108px;height:4px;border-radius:2px;background:var(--on-surface);opacity:.45}
+.gesture-bar.light::before{background:#fff}
+
+/* review panel next to the device (live mode, wide windows only) */
+.review{width:220px;max-height:915px;overflow:auto;font:13px/1.4 system-ui,sans-serif;color:#333}
+.review h2{font:600 12px/1 system-ui;letter-spacing:.08em;text-transform:uppercase;color:#777;margin:0 0 10px}
+.review button{display:block;width:100%;text-align:left;padding:7px 10px;border-radius:8px;color:#222}
+.review button:hover{background:rgba(0,0,0,.06)}
+.review button.on{background:#222;color:#fff}
+.review .hint{color:#777;font-size:12px;margin:14px 0 0;line-height:1.5}
+.review .rv-back{background:#fff;border:1px solid #ccc;margin-bottom:14px;text-align:center}
+@media (max-width:760px){.review{display:none}}
+@media (max-width:500px){
+  html:not(.shot) .stage{padding:0;display:block}
+  html:not(.shot) .device{width:100vw;height:100vh;height:100dvh;border-radius:0;box-shadow:none;--status-h:0px;--gesture-h:0px}
+  html:not(.shot) .status-bar,html:not(.shot) .gesture-bar{display:none}
+}
+/* screenshot / audit mode: bare device at 0,0, no motion */
+html.shot body{background:var(--surface)}
+html.shot .stage{padding:0;display:block;min-height:0}
+html.shot .device{border-radius:0;box-shadow:none}
+html.shot .review{display:none}
+/* still frames (shot/audit): every animation jumps to its end state, so screenshots show the finished scene */
+html.still *,html.still *::before,html.still *::after{animation-duration:0s!important;animation-delay:0s!important;animation-iteration-count:1!important;
+  transition-duration:0s!important;transition-delay:0s!important;caret-color:transparent}
+html.still .ripple{display:none}
+
+/* ---------- Screens ---------- */
+.screens{position:absolute;inset:0}
+.screen{--inset-b:var(--gesture-h);position:absolute;inset:0;display:flex;flex-direction:column;
+  padding-top:var(--status-h);padding-bottom:var(--inset-b);background:var(--screen-bg,var(--surface));overflow:hidden}
+.screen.has-nav{--inset-b:calc(var(--nav-h) + var(--gesture-h))}
+.screen:not(.active){visibility:hidden}
+.screen.active{visibility:visible;z-index:1}
+.content{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
+.pad{padding:0 var(--margin)}
+.stack{display:flex;flex-direction:column;gap:var(--gap,12px)}
+.row{display:flex;align-items:center;gap:var(--gap,8px)}
+.grow{flex:1;min-width:0}
+.spacer{height:var(--h,16px);flex:none}
+.bottom-bar{flex:none;display:flex;gap:8px;align-items:center;padding:12px var(--margin);background:var(--screen-bg,var(--surface))}
+.bottom-bar.raised{background:var(--surface-container);}
+
+@keyframes push-in{from{transform:translateX(30%);opacity:0}to{transform:none;opacity:1}}
+@keyframes push-out{from{transform:none;opacity:1}to{transform:translateX(-30%);opacity:0}}
+@keyframes pop-in{from{transform:translateX(-30%);opacity:0}to{transform:none;opacity:1}}
+@keyframes pop-out{from{transform:none;opacity:1}to{transform:translateX(30%);opacity:0}}
+@keyframes fade-in{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}
+@keyframes fade-out{from{opacity:1}to{opacity:0}}
+.anim-push-in{animation:push-in .3s cubic-bezier(.2,0,0,1) both;z-index:2}
+.anim-push-out{animation:push-out .3s cubic-bezier(.2,0,0,1) both;visibility:visible}
+.anim-pop-in{animation:pop-in .3s cubic-bezier(.2,0,0,1) both;z-index:2}
+.anim-pop-out{animation:pop-out .3s cubic-bezier(.2,0,0,1) both;visibility:visible}
+.anim-fade-in{animation:fade-in .25s cubic-bezier(.2,0,0,1) both;z-index:2}
+.anim-fade-out{animation:fade-out .1s linear both;visibility:visible}
+
+/* ---------- Type helpers ---------- */
+.t-display-l{font:var(--display-l)}.t-display-m{font:var(--display-m)}.t-display-s{font:var(--display-s)}
+.t-headline-l{font:var(--headline-l)}.t-headline-m{font:var(--headline-m)}.t-headline-s{font:var(--headline-s)}
+.t-title-l{font:var(--title-l)}.t-title-m{font:var(--title-m)}.t-title-s{font:var(--title-s)}
+.t-body-l{font:var(--body-l)}.t-body-m{font:var(--body-m)}.t-body-s{font:var(--body-s)}
+.t-label-l{font:var(--label-l)}.t-label-m{font:var(--label-m)}.t-label-s{font:var(--label-s)}
+.muted{color:var(--on-surface-variant)}
+.c-primary{color:var(--primary)}.c-error{color:var(--error)}
+.num{font-variant-numeric:tabular-nums}
+.ellipsis{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ---------- Icons (Material Symbols Rounded) ---------- */
+.ms{font-family:"Material Symbols Rounded";font-weight:normal;font-style:normal;font-size:var(--ms-size,24px);line-height:1;
+  letter-spacing:normal;text-transform:none;white-space:nowrap;direction:ltr;display:inline-block;flex:none;
+  width:1em;height:1em;overflow:hidden;font-feature-settings:"liga";-webkit-font-smoothing:antialiased;
+  font-variation-settings:"FILL" var(--ms-fill,0),"wght" var(--ms-wght,400),"GRAD" 0,"opsz" 24;user-select:none}
+.ms.fill{--ms-fill:1}
+.ms.sm{--ms-size:18px}.ms.lg{--ms-size:32px}.ms.xl{--ms-size:48px}
+
+/* ---------- Top app bar ---------- */
+.top-app-bar{flex:none;display:flex;align-items:center;gap:4px;height:var(--appbar-h);padding:0 4px;
+  background:var(--appbar-bg,var(--screen-bg,var(--surface)));color:var(--on-surface);transition:background .2s;position:relative;z-index:3}
+.top-app-bar.scrolled{background:var(--appbar-scrolled-bg,var(--surface-container))}
+.top-app-bar .title{flex:1;min-width:0;font:var(--title-l);padding:0 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-app-bar .icon-btn:first-child + .title{padding-left:4px}
+.top-app-bar.center .title{text-align:center}
+.top-app-bar.medium,.top-app-bar.large{flex-wrap:wrap;align-content:flex-start;padding-top:8px}
+.top-app-bar.medium{height:112px}.top-app-bar.large{height:152px}
+.top-app-bar.medium .title,.top-app-bar.large .title{order:9;flex-basis:100%;padding:0 12px;white-space:normal}
+.top-app-bar.medium .title{font:var(--headline-s);margin-top:4px}
+.top-app-bar.large .title{font:var(--headline-m);margin-top:36px}
+.top-app-bar .actions{display:flex;margin-left:auto}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 24px;border-radius:var(--btn-radius);
+  font:var(--label-l);white-space:nowrap;background:var(--primary);color:var(--on-primary);flex:none;position:relative}
+.btn .ms{--ms-size:18px;margin-left:-8px}
+.btn.tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
+.btn.outlined{background:transparent;color:var(--primary);border:1px solid var(--outline)}
+.btn.text{background:transparent;color:var(--primary);padding:0 12px}
+.btn.text .ms{margin-left:-4px}
+.btn.elevated{background:var(--surface-container-low);color:var(--primary);box-shadow:var(--elev-1)}
+.btn.danger{background:var(--error);color:var(--on-error)}
+.btn.lg{height:56px;padding:0 28px;font:var(--title-m)}
+.btn.block{display:flex;width:100%}
+.btn:disabled,.btn[aria-disabled=true]{background:color-mix(in srgb,var(--on-surface) 12%,transparent);color:color-mix(in srgb,var(--on-surface) 38%,transparent);box-shadow:none;border-color:transparent}
+.icon-btn{width:48px;height:48px;flex:none;display:inline-grid;place-items:center;border-radius:50%;color:var(--on-surface-variant);position:relative}
+.icon-btn.filled,.icon-btn.tonal,.icon-btn.outlined{width:40px;height:40px;margin:4px}
+.icon-btn.filled{background:var(--primary);color:var(--on-primary)}
+.icon-btn.tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
+.icon-btn.outlined{border:1px solid var(--outline-variant)}
+.icon-btn.on .ms{--ms-fill:1;color:var(--primary)}
+.fab{position:absolute;right:16px;bottom:calc(var(--inset-b) + 16px);z-index:5;width:56px;height:56px;border-radius:var(--fab-radius);
+  display:grid;place-items:center;background:var(--primary-container);color:var(--on-primary-container);box-shadow:var(--elev-3)}
+.fab.extended{width:auto;height:56px;display:flex;align-items:center;gap:12px;padding:0 20px 0 16px;font:var(--label-l)}
+.fab.small{width:40px;height:40px;border-radius:var(--r-md)}
+.fab.large{width:96px;height:96px;border-radius:var(--r-xl)}.fab.large .ms{--ms-size:36px}
+.fab.primary{background:var(--primary);color:var(--on-primary)}
+.fab.secondary{background:var(--secondary-container);color:var(--on-secondary-container)}
+.fab.tertiary{background:var(--tertiary-container);color:var(--on-tertiary-container)}
+
+/* ---------- Navigation bar ---------- */
+.nav-bar{position:absolute;left:0;right:0;bottom:0;z-index:6;height:calc(var(--nav-h) + var(--gesture-h));padding-bottom:var(--gesture-h);
+  display:flex;background:var(--navbar-bg,var(--surface-container))}
+.nav-item{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px 0 16px;
+  font:var(--label-m);color:var(--on-surface-variant);text-align:center}
+.nav-item .pill{position:relative;width:64px;height:32px;border-radius:16px;display:grid;place-items:center;transition:background .2s}
+.nav-item.active{color:var(--on-surface);font-weight:700}
+.nav-item.active .pill{background:var(--secondary-container);color:var(--on-secondary-container)}
+.nav-item.active .ms{--ms-fill:1}
+
+/* ---------- Tabs, segmented, chips ---------- */
+.tabs{flex:none;display:flex;border-bottom:1px solid var(--surface-container-highest);background:var(--screen-bg,var(--surface));overflow-x:auto;scrollbar-width:none}
+.tab{flex:1;min-width:max-content;height:48px;padding:0 16px;display:flex;align-items:center;justify-content:center;gap:8px;font:var(--title-s);color:var(--on-surface-variant);position:relative}
+.tab.active{color:var(--primary)}
+.tab.active::after{content:"";position:absolute;left:16px;right:16px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--primary)}
+.tabs.scroll .tab{flex:none}
+.segmented{display:flex;height:40px;border:1px solid var(--outline);border-radius:var(--r-full);overflow:hidden}
+.segmented>button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;font:var(--label-l);white-space:nowrap}
+.segmented>button+button{border-left:1px solid var(--outline)}
+.segmented>button.selected{background:var(--secondary-container);color:var(--on-secondary-container)}
+.segmented>button.selected::before{content:"check";font-family:"Material Symbols Rounded";font-size:18px;line-height:1;font-weight:normal}
+.chip-row{display:flex;gap:8px;overflow-x:auto;padding:4px var(--margin);scrollbar-width:none;flex:none}
+.chip-row::-webkit-scrollbar,.tabs::-webkit-scrollbar{display:none}
+.chip-wrap{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 16px;border-radius:var(--r-sm);border:1px solid var(--outline-variant);
+  font:var(--label-l);color:var(--on-surface-variant);white-space:nowrap;flex:none;background:transparent}
+.chip .ms{--ms-size:18px;margin-left:-8px}
+.chip.selected{background:var(--secondary-container);color:var(--on-secondary-container);border-color:transparent}
+.chip[data-chip].selected::before{content:"check";font-family:"Material Symbols Rounded";font-size:18px;line-height:1;margin-left:-8px;font-weight:normal}
+.chip.elevated{border-color:transparent;background:var(--surface-container-low);box-shadow:var(--elev-1)}
+
+/* ---------- Lists ---------- */
+.list{display:flex;flex-direction:column;padding:8px 0}
+.list-item{display:flex;align-items:center;gap:16px;width:100%;min-height:56px;padding:8px 24px 8px 16px;text-align:left;color:var(--on-surface);position:relative}
+.list-item.two{min-height:72px}.list-item.three{min-height:88px;align-items:flex-start;padding-top:12px}
+.list-item .body{flex:1;min-width:0;display:flex;flex-direction:column}
+.list-item .headline{font:var(--body-l);color:var(--on-surface)}
+.list-item .overline{font:var(--label-m);color:var(--on-surface-variant)}
+.list-item .supporting{font:var(--body-m);color:var(--on-surface-variant)}
+.list-item .trail{flex:none;font:var(--label-s);color:var(--on-surface-variant);display:flex;align-items:center;gap:8px}
+.list-item>.ms{color:var(--on-surface-variant)}
+.list.divided .list-item+.list-item{box-shadow:inset 0 1px 0 var(--outline-variant)}
+.avatar{width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;overflow:hidden;
+  background:var(--primary-container);color:var(--on-primary-container);font:var(--title-m)}
+.avatar.sm{width:32px;height:32px;font:var(--label-l)}.avatar.lg{width:72px;height:72px;font:var(--headline-s)}
+.thumb{width:56px;height:56px;flex:none;border-radius:var(--r-sm);object-fit:cover;background:var(--surface-container-high)}
+.section-title{font:var(--title-s);color:var(--on-surface-variant);padding:16px var(--margin) 8px;display:flex;align-items:center;justify-content:space-between}
+.divider{height:1px;background:var(--outline-variant);margin:8px 0;flex:none}
+.divider.inset{margin-left:var(--margin);margin-right:var(--margin)}
+
+/* ---------- Cards & media ---------- */
+.card{display:block;border-radius:var(--card-radius);background:var(--surface-container-low);box-shadow:var(--elev-1);overflow:hidden;color:var(--on-surface);position:relative}
+button.card{width:100%;text-align:left}
+.card.filled{background:var(--surface-container-highest);box-shadow:none}
+.card.outlined{background:var(--surface);border:1px solid var(--outline-variant);box-shadow:none}
+.card-body{padding:16px}
+.media{position:relative;height:var(--h,160px);background:var(--media-bg,var(--secondary-container));color:var(--media-fg,var(--on-secondary-container));
+  display:grid;place-items:center;overflow:hidden}
+.media[data-icon]::after{content:attr(data-icon);font-family:"Material Symbols Rounded";font-size:var(--icon,56px);line-height:1;font-feature-settings:"liga";
+  font-variation-settings:"FILL" 1,"wght" 300,"GRAD" 0,"opsz" 48;opacity:.9}
+.carousel{display:flex;gap:8px;overflow-x:auto;padding:0 var(--margin);scroll-snap-type:x mandatory;scrollbar-width:none}
+.carousel>*{scroll-snap-align:start;flex:none}
+.carousel::-webkit-scrollbar{display:none}
+
+/* ---------- Inputs ---------- */
+.field{position:relative;display:block;margin:8px 0}
+.field input,.field textarea,.field select{display:block;width:100%;height:56px;padding:22px 16px 6px;border:0;outline:none;
+  border-radius:var(--r-xs) var(--r-xs) 0 0;background:var(--surface-container-highest);box-shadow:inset 0 -1px 0 var(--on-surface-variant);font:var(--body-l);color:var(--on-surface)}
+.field textarea{height:auto;min-height:112px;resize:none;padding-top:26px}
+.field input:focus,.field textarea:focus{box-shadow:inset 0 -2px 0 var(--primary)}
+.field .label{position:absolute;left:16px;top:16px;font:var(--body-l);color:var(--on-surface-variant);pointer-events:none;transition:all .15s;white-space:nowrap}
+.field input:focus~.label,.field input:not(:placeholder-shown)~.label,.field textarea:focus~.label,.field textarea:not(:placeholder-shown)~.label,.field select~.label{top:6px;font:var(--body-s);color:var(--primary)}
+.field input:not(:focus):not(:placeholder-shown)~.label,.field textarea:not(:focus):not(:placeholder-shown)~.label{color:var(--on-surface-variant)}
+.field.outlined input,.field.outlined textarea,.field.outlined select{background:transparent;border-radius:var(--r-xs);box-shadow:inset 0 0 0 1px var(--outline);padding:16px}
+.field.outlined input:focus,.field.outlined textarea:focus{box-shadow:inset 0 0 0 2px var(--primary)}
+.field.outlined .label{background:var(--screen-bg,var(--surface));padding:0 4px;left:12px}
+.field.outlined input:focus~.label,.field.outlined input:not(:placeholder-shown)~.label,.field.outlined textarea:focus~.label,.field.outlined textarea:not(:placeholder-shown)~.label{top:-8px}
+.field .lead{position:absolute;left:12px;top:16px;color:var(--on-surface-variant)}
+.field .trail-icon{position:absolute;right:12px;top:16px;color:var(--on-surface-variant)}
+.field.has-lead input{padding-left:52px}.field.has-lead .label{left:52px}
+.field .support{display:block;font:var(--body-s);color:var(--on-surface-variant);padding:4px 16px 0}
+.field.error input,.field input.invalid{box-shadow:inset 0 -2px 0 var(--error)}
+.field.error .label,.field.error .support{color:var(--error)}
+.search-bar{display:flex;align-items:center;gap:4px;height:56px;border-radius:28px;padding:0 4px 0 16px;background:var(--surface-container-high);color:var(--on-surface-variant)}
+.search-bar input{flex:1;min-width:0;height:100%;border:0;outline:none;background:transparent;font:var(--body-l);color:var(--on-surface);padding:0 8px}
+.search-bar input::placeholder{color:var(--on-surface-variant)}
+input[type=checkbox],input[type=radio]{accent-color:var(--primary);width:18px;height:18px;margin:0;flex:none}
+input[type=range]{accent-color:var(--primary);width:100%;height:32px;margin:0}
+.switch{position:relative;display:inline-block;width:52px;height:32px;flex:none;cursor:pointer}
+.switch input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:1}
+.switch .track{position:absolute;inset:0;border-radius:16px;background:var(--surface-container-highest);box-shadow:inset 0 0 0 2px var(--outline);transition:background .2s}
+.switch .track::after{content:"";position:absolute;left:8px;top:8px;width:16px;height:16px;border-radius:50%;background:var(--outline);transition:all .2s cubic-bezier(.2,0,0,1)}
+.switch input:checked+.track{background:var(--primary);box-shadow:none}
+.switch input:checked+.track::after{left:24px;top:4px;width:24px;height:24px;background:var(--on-primary)}
+label.check-row,.check-row{display:flex;align-items:center;gap:16px;min-height:56px;padding:0 24px 0 16px;cursor:pointer}
+.check-row .body{flex:1;min-width:0}
+
+/* ---------- Feedback & status ---------- */
+.badge{position:absolute;top:-2px;right:10px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--error);color:var(--on-error);
+  font:var(--label-s);display:grid;place-items:center;line-height:16px}
+.badge.dot{min-width:6px;width:6px;height:6px;padding:0;top:2px;right:18px}
+.tag{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 8px;border-radius:var(--r-xs);font:var(--label-m);
+  background:var(--tag-bg,var(--surface-container-high));color:var(--tag-fg,var(--on-surface-variant));white-space:nowrap}
+.progress{height:4px;border-radius:2px;background:var(--secondary-container);overflow:hidden;flex:none}
+.progress>i{display:block;height:100%;width:var(--v,40%);border-radius:2px;background:var(--primary)}
+.spinner{width:40px;height:40px;border-radius:50%;border:4px solid var(--secondary-container);border-top-color:var(--primary);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty-state{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:48px 32px;color:var(--on-surface-variant)}
+.skeleton{background:linear-gradient(90deg,var(--surface-container-high),var(--surface-container),var(--surface-container-high));background-size:200% 100%;
+  animation:shimmer 1.2s linear infinite;border-radius:var(--r-sm)}
+@keyframes shimmer{to{background-position:-200% 0}}
+
+/* ---------- Overlays: scrim, bottom sheet, dialog, menu, snackbar ---------- */
+.overlays{position:absolute;inset:0;z-index:20;pointer-events:none}
+.scrim{position:absolute;inset:0;background:rgba(0,0,0,.32);opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .25s;pointer-events:auto}
+.scrim.on{opacity:1;visibility:visible;transition:opacity .25s}
+.scrim.clear{background:transparent}
+.sheet{position:absolute;left:0;right:0;bottom:0;max-height:88%;display:flex;flex-direction:column;pointer-events:auto;
+  background:var(--surface-container-low);color:var(--on-surface);border-radius:var(--sheet-radius) var(--sheet-radius) 0 0;padding-bottom:var(--gesture-h);
+  transform:translateY(105%);visibility:hidden;transition:transform .32s cubic-bezier(.2,0,0,1),visibility 0s .32s}
+.sheet::before{content:"";flex:none;width:32px;height:4px;border-radius:2px;background:var(--on-surface-variant);opacity:.4;margin:16px auto 8px}
+.sheet.open{transform:none;visibility:visible;transition:transform .36s cubic-bezier(.05,.7,.1,1)}
+.sheet-title{font:var(--title-l);padding:8px 24px 12px}
+.sheet-body{overflow-y:auto;min-height:0;scrollbar-width:none}
+.sheet-actions{display:flex;gap:8px;padding:16px 24px 8px}
+.dialog{position:absolute;left:50%;top:50%;width:calc(100% - 64px);max-width:340px;max-height:80%;overflow:auto;pointer-events:auto;
+  background:var(--surface-container-high);color:var(--on-surface);border-radius:var(--r-xl);padding:24px;
+  transform:translate(-50%,-50%) scale(.92);opacity:0;visibility:hidden;transition:transform .2s,opacity .15s,visibility 0s .2s}
+.dialog.open{transform:translate(-50%,-50%);opacity:1;visibility:visible;transition:transform .25s cubic-bezier(.05,.7,.1,1),opacity .2s}
+.dialog .d-icon{display:block;margin:0 auto 16px;color:var(--secondary)}
+.dialog .d-title{font:var(--headline-s);margin-bottom:16px}
+.dialog .d-icon+.d-title{text-align:center}
+.dialog .d-text{font:var(--body-m);color:var(--on-surface-variant)}
+.dialog .d-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:24px}
+.menu{position:absolute;min-width:180px;max-width:280px;padding:8px 0;pointer-events:auto;background:var(--surface-container);border-radius:var(--r-xs);box-shadow:var(--elev-2);
+  opacity:0;visibility:hidden;transform:scale(.95);transform-origin:top right;transition:opacity .12s,transform .12s,visibility 0s .12s}
+.menu.open{opacity:1;visibility:visible;transform:none;transition:opacity .15s,transform .15s}
+.menu-item{display:flex;align-items:center;gap:12px;width:100%;height:48px;padding:0 16px;font:var(--label-l);color:var(--on-surface);white-space:nowrap}
+.menu-item .ms{color:var(--on-surface-variant)}
+.snackbar{position:absolute;left:16px;right:16px;bottom:calc(var(--active-inset,24px) + 12px);z-index:30;min-height:48px;display:flex;align-items:center;gap:8px;
+  padding:4px 8px 4px 16px;border-radius:var(--r-xs);background:var(--inverse-surface);color:var(--inverse-on-surface);font:var(--body-m);box-shadow:var(--elev-3);
+  transform:translateY(16px);opacity:0;visibility:hidden;transition:all .2s;pointer-events:auto}
+.snackbar.on{transform:none;opacity:1;visibility:visible}
+.snackbar .snack-text{flex:1;min-width:0;padding:10px 0}
+.snackbar .snack-action{height:40px;padding:0 12px;font:var(--label-l);color:var(--inverse-primary);border-radius:var(--r-full)}
+
+/* ---------- Ripple ---------- */
+.ripple{position:absolute;border-radius:50%;background:currentColor;opacity:.14;transform:scale(0);pointer-events:none;animation:rpl .45s cubic-bezier(.2,0,0,1) forwards}
+@keyframes rpl{to{transform:scale(1);opacity:0}}
+.rpl-clip{overflow:hidden!important}
+
+</style>
+<style id="theme">
+/* @theme:start — generated: proto.py palette --seed #3f7a2e --style tonal */
+:root{
+  --primary:#306b20;--on-primary:#ffffff;--primary-container:#b5f39e;--on-primary-container:#0e2000;
+  --secondary:#52634b;--on-secondary:#ffffff;--secondary-container:#d5e8cc;--on-secondary-container:#121f08;
+  --tertiary:#196967;--on-tertiary:#ffffff;--tertiary-container:#a6f0ed;--on-tertiary-container:#00201f;
+  --error:#bf0031;--on-error:#ffffff;--error-container:#ffdad8;--on-error-container:#410004;
+  --surface:#f6fbf4;--surface-dim:#d7dbd4;--surface-bright:#f6fbf4;--surface-container-lowest:#ffffff;
+  --surface-container-low:#f0f5ee;--surface-container:#eaefe8;--surface-container-high:#e5e9e3;--surface-container-highest:#dfe4dd;
+  --on-surface:#191c18;--on-surface-variant:#41493e;--outline:#71796d;--outline-variant:#c0c9bc;
+  --inverse-surface:#2e312c;--inverse-on-surface:#edf2eb;--inverse-primary:#9ad683;
+}
+/* @theme:end */
+/* @brand:start — "아침 텃밭": 이른 아침 햇빛 같은 연한 리넨 바탕 · 짙은 흙 · 새싹 초록 한 가지 · 숨 쉬는 씨앗 캐릭터 */
+:root{
+  --font-display:"Hahmlet","Gothic A1",serif;
+  --font-body:"Gothic A1",system-ui,sans-serif;
+  --btn-radius:var(--r-full);--card-radius:16px;--sheet-radius:var(--r-xl);--fab-radius:var(--r-lg);
+  /* linen morning surfaces instead of the generated mint tint */
+  --surface:#f5f2e9;--surface-bright:#faf8f2;--surface-container-lowest:#fffdf8;
+  --surface-container-low:#efebdf;--surface-container:#e9e4d6;--surface-container-high:#e2dccc;--surface-container-highest:#dbd4c2;
+  --on-surface:#1d1b16;--on-surface-variant:#4d4639;--outline:#7f7667;--outline-variant:#d3cab7;
+  /* garden materials */
+  --soil:#4a3326;--soil-deep:#38251b;--soil-ink:#f3e7d4;--kraft:#eadcc2;--kraft-deep:#d9c6a3;
+  --leaf:#4f9a3a;--leaf-2:#7cc04f;--seed-ink:#2a1a10;
+}
+/* @brand:end */
+</style>
+<style id="app">
+.screen{--screen-bg:var(--surface)}
+.disp{font-family:var(--font-display)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ── seed character (shared) ─────────────────────────────
+   One SVG per seed: sprout (stem + 2 leaves) above, body + face below.
+   State = classes on the wrapper: .sleep / .awake / .happy · .sprouted   */
+.sd{display:block;width:100%;height:auto;overflow:visible}
+.sd .stem{fill:none;stroke:var(--leaf);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.sd .leaf{fill:var(--leaf-2);stroke:var(--leaf);stroke-width:1.5;transform-box:fill-box;transform:scale(0)}
+.sd .ll{transform-origin:100% 70%}.sd .lr{transform-origin:0% 75%}
+.sd .bd{transform-box:fill-box;transform-origin:50% 100%;animation:breathe 3.4s ease-in-out infinite}
+.sd .shell{stroke:rgba(56,37,27,.45);stroke-width:2}
+.sd .stripe{fill:none;stroke:rgba(56,37,27,.35);stroke-width:2.5;stroke-linecap:round}
+.sd .shine{fill:#fff;opacity:.38}
+.sd .crack{fill:none;stroke:var(--soil-deep);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.sd .face{transform:translate(var(--lx,0px),var(--ly,0px));transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
+.sd .eyes{fill:var(--seed-ink);transform-box:fill-box;transform-origin:center}
+.sd .eyes .hl{fill:#fff}
+.sd .lids,.sd .joy,.sd .mouth{fill:none;stroke:var(--seed-ink);stroke-width:2.4;stroke-linecap:round}
+.sd .lids,.sd .joy{display:none}
+.sd .ck{fill:#e98b78;opacity:.55}
+.sleep .sd .eyes{display:none}.sleep .sd .lids{display:inline}
+.sleep .sd .bd{animation-duration:5s}
+.happy .sd .eyes{display:none}.happy .sd .joy{display:inline}
+.awake .sd .eyes{animation:blink 4.4s infinite}
+.sprouted .sd .stem,.sprouted .sd .crack{stroke-dashoffset:0}
+.sprouted .sd .leaf{transform:none}
+@keyframes breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(1.035,.965)}}
+@keyframes blink{0%,45%,49%,100%{transform:scaleY(1)}47%{transform:scaleY(.1)}}
+/* sleeping z's */
+.zz{position:absolute;pointer-events:none;font:700 14px/1 var(--font-display);color:var(--on-surface-variant)}
+.zz i{position:absolute;font-style:normal;opacity:0;animation:zz 3s ease-out infinite}
+.zz i:nth-child(2){animation-delay:1s;font-size:12px}.zz i:nth-child(3){animation-delay:2s;font-size:11px}
+@keyframes zz{0%{opacity:0;transform:translate(0,0)}20%{opacity:.9}100%{opacity:0;transform:translate(14px,-26px)}}
+:not(.sleep)>.zz{display:none}
+html.still .sd .bd,html.still .sd .eyes,html.still .pk.hint{animation:none!important}
+html.still .zz i{animation:none;opacity:.8}
+html.still .zz i:nth-child(2){transform:translate(8px,-12px);opacity:.6}html.still .zz i:nth-child(3){transform:translate(14px,-22px);opacity:.4}
+.glow{position:absolute;width:220px;height:220px;margin:0 0 0 -110px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(closest-side,rgba(255,226,140,.9),rgba(255,226,140,.35) 55%,rgba(255,226,140,0))}
+.dirt{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--soil);pointer-events:none;z-index:4}
+
+/* ── 1 · name ─────────────────────────────── */
+#name .content{display:flex;flex-direction:column;padding:12px 24px 8px}
+.wm{display:flex;align-items:center;gap:8px;font:700 18px/1 var(--font-display);color:var(--on-surface)}
+.wm svg{width:22px;height:22px}
+.topline{display:flex;align-items:center;justify-content:space-between;min-height:48px}
+.stepper{display:flex;gap:6px;align-items:center}
+.stepper i{width:6px;height:6px;border-radius:3px;background:var(--outline-variant)}
+.stepper i.on{width:18px;background:var(--primary)}
+.hero{position:relative;height:236px;margin:12px -24px 0;cursor:pointer}
+.hero .mound{position:absolute;left:50%;bottom:0;width:220px;height:44px;margin-left:-110px}
+.hero .seed{position:absolute;left:50%;bottom:20px;width:124px;margin-left:-62px}
+.hero .seed .sd{transform-origin:50% 100%}
+.hero .seed .zz{left:74%;top:44%;font-size:18px}
+.bubble{position:absolute;left:calc(50% + 30px);top:96px;max-width:150px;padding:10px 14px;border-radius:18px 18px 18px 4px;
+  background:var(--on-surface);color:var(--surface);font:600 14px/1.35 var(--font-body);opacity:0;transform:translateY(6px) scale(.9);transform-origin:0 100%;
+  transition:opacity .25s,transform .35s cubic-bezier(.3,1.5,.5,1);pointer-events:none}
+.bubble.on{opacity:1;transform:none}
+.nm-h{font:700 30px/1.32 var(--font-display);letter-spacing:-.4px;margin-top:20px}
+.nm-sub{margin-top:10px;color:var(--on-surface-variant);font:var(--body-l)}
+#name-form{margin-top:24px}
+.nm-help{display:flex;justify-content:space-between;padding:4px 16px 0;font:var(--body-s);color:var(--on-surface-variant)}
+.field.error+.nm-help{color:var(--error)}
+#name .field.outlined input{font:500 18px/1 var(--font-body)}
+
+/* ── 2 · pick ─────────────────────────────── */
+#pick .content{padding:4px 16px 16px}
+.pk-h{font:700 26px/1.34 var(--font-display);letter-spacing:-.3px;padding:0 4px}
+.pk-sub{margin:8px 4px 20px;color:var(--on-surface-variant);font:var(--body-m)}
+.packets{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pk{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:112px;padding:20px 10px 10px;border:0;border-radius:6px 6px 14px 14px;
+  background:var(--kraft);color:var(--on-surface);text-align:left;font:inherit;cursor:pointer;overflow:hidden;
+  transition:transform .2s cubic-bezier(.3,1.5,.5,1),box-shadow .2s}
+.pk::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:var(--kraft-deep);
+  -webkit-mask:radial-gradient(circle at 5px 10px,transparent 3.5px,#000 4px) 0 0/10px 10px repeat-x;mask:radial-gradient(circle at 5px 10px,transparent 3.5px,#000 4px) 0 0/10px 10px repeat-x}
+.pk:active{transform:scale(.96)}
+.pk .pk-seed{width:30px;height:33px;transition:opacity .2s,transform .3s}
+.pk .pk-name{font:600 14px/1.3 var(--font-body);word-break:keep-all}
+.pk .pk-when{font:500 12px/1 var(--font-body);color:var(--on-surface-variant);margin-top:auto}
+.pk .pk-done{position:absolute;right:8px;top:16px;width:22px;height:22px;border-radius:50%;background:var(--primary);color:var(--on-primary);
+  display:grid;place-items:center;transform:scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.pk .pk-done .ms{--ms-size:16px}
+.pk.on{background:var(--surface-container-lowest);box-shadow:inset 0 0 0 2px var(--primary)}
+.pk.on::before{background:var(--primary)}
+.pk.on .pk-seed{opacity:.18;transform:translateY(-4px)}
+.pk.on .pk-when{color:var(--primary);font-weight:700}
+.pk.on .pk-done{transform:none}
+.pk.add{background:transparent;box-shadow:inset 0 0 0 1.5px var(--outline);border-radius:14px}
+.pk.add::before{display:none}
+.pk.add .ms{color:var(--primary)}
+.pk.bump{animation:bump .4s}
+@keyframes bump{30%{transform:translateX(-4px)}60%{transform:translateX(4px)}}
+/* garden bed (shared by pick + today) */
+.bed{position:relative;--sw:72px;--sb:44px;--soil-h:60px;height:124px;z-index:3}
+.bed .soil{position:absolute;left:0;right:0;bottom:0;width:100%;height:var(--soil-h);display:block;z-index:2;pointer-events:none}
+.bed .soil path{fill:var(--soil)}
+.bed .seed{position:absolute;bottom:var(--sb);width:var(--sw);margin-left:calc(var(--sw) / -2);z-index:1;background:none;border:0;padding:0;cursor:default}
+.bed .seed .zz{left:70%;top:52%}
+.bed .dimple{position:absolute;bottom:calc(var(--soil-h) - 16px);width:30px;height:7px;margin-left:-15px;border-radius:50%;background:var(--soil-deep);z-index:3;transition:opacity .3s}
+.bed .dimple.used{opacity:0}
+.bed .lab{position:absolute;bottom:12px;width:104px;margin-left:-52px;text-align:center;font:600 12px/1.25 var(--font-body);color:var(--soil-ink);z-index:3;
+  word-break:keep-all;animation:fadeUp .4s both}
+.bed-wrap{flex:none;padding:0 16px;margin-top:-4px;position:relative;z-index:3}
+.bed-head{display:flex;justify-content:space-between;align-items:baseline;padding:10px 4px 0;font:600 13px/1 var(--font-body);color:var(--on-surface-variant)}
+.bed-head .num{color:var(--on-surface)}
+#pick .bottom-bar{background:var(--soil);padding-top:4px}
+#pick{--screen-bg:var(--surface)}#pick.screen{background:linear-gradient(to top,var(--soil) 0 60px,var(--surface) 60px)}
+#pick .bottom-bar .btn{background:var(--leaf-2);color:#14240b}
+#pick .bottom-bar .btn:disabled{background:var(--soil-deep);color:#cdbba3;opacity:1}
+#pick{--screen-bg:var(--surface)}
+#pick .bed-wrap .bed{margin:0 -16px}
+.gesture-bar{z-index:6}
+
+/* ── 3 · today ────────────────────────────── */
+#today .content{padding-bottom:16px}
+.garden{position:relative;padding:4px 20px 0;background:radial-gradient(120% 70% at 78% 0%,#fdf0c8 0,rgba(253,240,200,0) 60%)}
+.gd-date{font:600 13px/1 var(--font-body);color:var(--on-surface-variant);padding-top:6px}
+.gd-msg{font:700 22px/1.4 var(--font-display);letter-spacing:-.2px;margin-top:10px;min-height:62px}
+.gd-msg em{font-style:normal;color:var(--primary)}
+#today .bed{height:262px;--sw:96px;--sb:70px;--soil-h:96px;margin:0 -20px}
+#today .bed .seed{cursor:pointer}
+#today .bed .lab{bottom:18px;font-size:13px}
+.tap-hint{position:absolute;bottom:calc(var(--sb) + 132px);width:120px;margin-left:-60px;text-align:center;font:600 12px/1 var(--font-body);color:var(--primary);z-index:3;animation:hint 1.6s ease-in-out infinite}
+.tap-hint .ms{--ms-size:16px;vertical-align:-3px}
+@keyframes hint{50%{transform:translateY(-4px)}}
+html.still .tap-hint{animation:none}
+.td-list{padding:0 4px}
+.td-row{display:flex;align-items:center;gap:14px;padding:10px 12px 10px 16px;min-height:72px}
+.td-row .ic{width:44px;height:44px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--kraft);color:var(--soil)}
+.td-row .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.td-row .hd{font:600 16px/1.3 var(--font-body)}
+.td-row .sp{font:var(--body-m);color:var(--on-surface-variant)}
+.td-row.done .sp{color:var(--primary);font-weight:600}
+.ck-btn{width:48px;height:48px;border-radius:50%;border:0;background:none;display:grid;place-items:center;cursor:pointer;flex:none}
+.ck-btn i{width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--outline);display:grid;place-items:center;transition:background .25s,box-shadow .25s,transform .3s cubic-bezier(.3,1.6,.5,1)}
+.ck-btn .ms{--ms-size:22px;color:var(--on-primary);transform:scale(0);transition:transform .3s .1s cubic-bezier(.3,1.6,.5,1)}
+.td-row.done .ck-btn i{background:var(--primary);box-shadow:none;transform:scale(1.06)}
+.td-row.done .ck-btn .ms{transform:none}
+.td-row+.td-row{box-shadow:inset 0 1px 0 var(--outline-variant)}
+.td-note{display:flex;gap:8px;margin:12px 20px 0;padding:12px 14px;border-radius:12px;background:var(--surface-container-low);font:var(--body-m);color:var(--on-surface-variant)}
+.td-note .ms{--ms-size:20px;color:var(--leaf);flex:none}
+#today .section-title{padding-top:20px}
+.done-bar{flex-direction:column;align-items:stretch;gap:12px;background:var(--surface-container-lowest)!important;box-shadow:0 -1px 0 var(--outline-variant);animation:fadeUp .5s both}
+.done-bar p{font:var(--body-m);color:var(--on-surface-variant);display:flex;gap:8px;align-items:flex-start}
+.done-bar p .ms{--ms-size:20px;color:var(--primary)}
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="device" data-time="7:42">
+  <div class="screens">
+
+    <!-- 1 · 이름 -->
+    <section class="screen" id="name" data-start data-title="이름 입력">
+      <div class="content">
+        <div class="topline">
+          <div class="wm"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V12" stroke="#4f9a3a" stroke-width="2.4" stroke-linecap="round"/><path d="M12 12C10 7 6 6 3 7c1 4 5 6 9 5Z" fill="#7cc04f"/><path d="M12 12c2-5 6-6 9-5-1 4-5 6-9 5Z" fill="#4f9a3a"/></svg>움틈</div>
+          <div class="stepper" aria-label="3단계 중 1단계"><i class="on"></i><i></i><i></i></div>
+        </div>
+        <div class="hero" id="hero" data-action="pokeHero" role="button" aria-label="씨앗 깨우기">
+          <svg class="mound" viewBox="0 0 220 44" aria-hidden="true"><path d="M0 44C30 14 70 4 110 4s80 10 110 40Z" fill="#4a3326"/></svg>
+          <div class="seed sleep" id="hero-seed"></div>
+          <div class="bubble" id="hero-bubble" aria-live="polite"></div>
+        </div>
+        <h1 class="nm-h">처음 오셨네요.<br>뭐라고 불러 드릴까요?</h1>
+        <p class="nm-sub">이름을 알려 주시면 씨앗이 깨어나요.</p>
+        <form id="name-form" data-action="saveName" data-go="pick" novalidate>
+          <label class="field outlined" id="name-field"><input id="name-input" name="nm" maxlength="8" autocomplete="off" placeholder=" " data-js><span class="label">이름</span></label>
+          <div class="nm-help"><span id="name-msg">1~8자, 한글·영문·숫자</span><span class="num" id="name-count">0/8</span></div>
+        </form>
+      </div>
+      <div class="bottom-bar"><button class="btn block lg" type="submit" form="name-form" data-links="pick">다음</button></div>
+    </section>
+
+    <!-- 2 · 습관 고르기 (씨앗 심기) -->
+    <section class="screen" id="pick" data-title="습관 고르기">
+      <header class="top-app-bar">
+        <button class="icon-btn" data-back aria-label="뒤로"><span class="ms">arrow_back</span></button>
+        <h1 class="title"></h1>
+        <div class="actions"><div class="stepper" aria-label="3단계 중 2단계" style="margin-right:16px"><i></i><i class="on"></i><i></i></div></div>
+      </header>
+      <div class="content">
+        <h1 class="pk-h"><span class="who">지우</span>님, 어떤 습관을<br>심어 볼까요?</h1>
+        <p class="pk-sub">처음엔 3개까지만요. 작게 시작해야 잘 자라요.</p>
+        <div class="packets" id="packets"></div>
+      </div>
+      <div class="bed-wrap">
+        <div class="bed-head" data-overlap-ok><span>내 텃밭</span><span>심은 씨앗 <b class="num" id="bed-count">0</b>/3</span></div>
+        <div class="bed" id="pick-bed"></div>
+      </div>
+      <div class="bottom-bar"><button class="btn block lg" id="pick-cta" data-action="startGarden" data-links="today" disabled>씨앗을 골라 주세요</button></div>
+    </section>
+
+    <!-- 3 · 오늘 (첫 체크) -->
+    <section class="screen" id="today" data-title="첫 체크" data-no-up>
+      <header class="top-app-bar">
+        <h1 class="title"><span class="who">지우</span>님의 텃밭</h1>
+      </header>
+      <div class="content">
+        <div class="garden">
+          <div class="gd-date">10월 14일 화요일 · 첫날</div>
+          <p class="gd-msg" id="gd-msg"></p>
+          <div class="bed" id="today-bed"></div>
+        </div>
+        <div class="section-title">오늘 할 일</div>
+        <div class="td-list" id="td-list"></div>
+        <p class="td-note"><span class="ms fill">spa</span><span>하루 빠져도 시들지 않아요. 씨앗은 다음 체크까지 기다려 줘요.</span></p>
+      </div>
+      <div class="bottom-bar done-bar" id="done-bar" hidden>
+        <p><span class="ms fill">eco</span><span id="done-text">첫 싹이 텄어요. 내일 또 체크하면 본잎이 한 장 더 나요.</span></p>
+        <button class="btn block lg" data-action="finishFlow">내일 또 올게요</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="overlays">
+    <div class="sheet" id="custom-sheet">
+      <div class="sheet-title">나만의 습관 심기</div>
+      <form class="sheet-body pad" id="custom-form" data-action="addCustom" novalidate>
+        <label class="field" id="custom-field"><input id="custom-input" maxlength="12" placeholder=" " autocomplete="off" data-js><span class="label">습관 이름</span><span class="support" id="custom-msg">예: 출근길 계단 오르기 · 최대 12자</span></label>
+        <div class="t-label-l muted" style="margin:16px 0 8px">언제 하나요?</div>
+        <div class="chip-row" data-single id="custom-when">
+          <button type="button" class="chip selected" data-chip>매일 아침</button>
+          <button type="button" class="chip" data-chip>매일 낮</button>
+          <button type="button" class="chip" data-chip>매일 저녁</button>
+          <button type="button" class="chip" data-chip>매일 밤</button>
+        </div>
+        <div class="sheet-actions" style="padding:20px 0 8px"><button type="button" class="btn text" data-close>취소</button><span class="grow"></span><button class="btn" type="submit">씨앗 만들기</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<script data-shell>
+/* Android prototype shell runtime — router, overlays, interactions, and the layout audit.
+   Don't edit per app. App logic goes in the app's own <script> via the App API:
+     App.go(id) App.tab(id) App.back() App.sheet(id) App.dialog(id) App.menu(id, anchorEl) App.close()
+     App.snack(text, actionLabel?, fn?)  App.actions.name = (el, event) => {...}  App.onEnter(id, fn)  App.state
+   Markup conventions are documented in references/components.md. */
+(function () {
+  'use strict';
+  var qs = function (s, r) { return (r || document).querySelector(s); };
+  var qsa = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var params = new URLSearchParams(location.search);
+  // live = normal · film = bare device, real-time motion (proto.py frames) · shot/audit = bare device, animations at end state
+  var MODE = params.has('audit') ? 'audit' : params.has('shot') ? 'shot' : params.has('film') ? 'film' : 'live';
+  var html = document.documentElement;
+  if (MODE !== 'live') html.classList.add('shot');
+  if (MODE === 'shot' || MODE === 'audit') html.classList.add('still');
+  if (MODE === 'film') filmClock(parseFloat(params.get('film')) || 0);
+
+  /* film=<seconds>: one deterministic clock for JS timers, rAF and CSS animations, frozen at that moment
+     so `proto.py frames` captures exactly t seconds after the page booted. */
+  function filmClock(stopAt) {
+    // Headless virtual time starves requestAnimationFrame after ~1s, so film mode drives everything from timers,
+    // which virtual time advances deterministically: a 16ms ticker syncs CSS/WAAPI animations, and rAF is emulated.
+    var st = window.setTimeout, frozen = false, t0 = performance.now(), born = new WeakMap();
+    window.setTimeout = function (fn, ms) { var args = Array.prototype.slice.call(arguments, 2); return st(function () { if (!frozen && typeof fn === 'function') fn.apply(null, args); }, ms); };
+    window.requestAnimationFrame = function (fn) { return st(function () { if (!frozen) fn(performance.now()); }, 16); };
+    window.cancelAnimationFrame = function (id) { clearTimeout(id); };
+    function sync(el) {
+      document.getAnimations().forEach(function (a) {
+        if (!born.has(a)) { born.set(a, el); a.pause(); }
+        try { a.currentTime = Math.max(0, el - born.get(a)); } catch (e) { /* finished/removed */ }
+      });
+    }
+    function freeze() { if (frozen) return; sync(stopAt * 1000); frozen = true; html.setAttribute('data-film-done', String(stopAt)); }
+    st(freeze, stopAt * 1000);
+    (function tick() {
+      if (frozen) return;
+      var el = performance.now() - t0;
+      if (el >= stopAt * 1000) return freeze();
+      sync(el);
+      st(tick, 16);
+    })();
+  }
+
+  if (params.get('dark') === '1') html.classList.add('dark');
+  var jsErrors = [];
+  window.addEventListener('error', function (e) { jsErrors.push((e.message || 'error') + (e.lineno ? ' (line ' + e.lineno + ')' : '')); });
+  var KO = /^ko/i.test(html.lang || navigator.language || '');
+  var T = KO
+    ? { root: '첫 화면이에요 — 여기서 뒤로 가면 앱이 닫혀요', missing: '없는 화면: ', todo: '아직 준비 중인 기능이에요', back: '◀ 뒤로', hint: 'Esc 또는 화면 왼쪽 가장자리에서 오른쪽으로 끌기 = 뒤로', screens: '화면' }
+    : { root: 'This is the first screen — back would close the app', missing: 'Missing screen: ', todo: 'Not built yet', back: '◀ Back', hint: 'Esc, or drag from the left edge = back', screens: 'Screens' };
+
+  var device, overlaysEl, scrim, snackEl, statusBar, gestureBar;
+  var overlayStack = [];
+  var ACTION_ATTRS = ['data-go', 'data-tab', 'data-back', 'data-sheet', 'data-dialog', 'data-menu', 'data-close', 'data-snack',
+    'data-chip', 'data-panel', 'data-toggle', 'data-action', 'data-todo', 'data-js', 'data-links', 'onclick'];
+  var ACTION_SEL = ACTION_ATTRS.map(function (a) { return '[' + a + ']'; }).join(',');
+
+  var App = window.App = window.App || {};
+  App.stack = []; App.state = App.state || {}; App.actions = App.actions || {}; App._enter = App._enter || {};
+  App._leave = App._leave || {};
+  App.mode = MODE;
+  App.shot = MODE === 'shot' || MODE === 'audit';   // still screenshot: show the finished state, skip waits
+  App.reducedMotion = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  App.onEnter = function (id, fn) { (App._enter[id] = App._enter[id] || []).push(fn); };
+  App.onLeave = function (id, fn) { (App._leave[id] = App._leave[id] || []).push(fn); };
+  /* setTimeout that runs immediately in still screenshots, so sequences (chat, reveals) render complete */
+  App.after = function (ms, fn) { if (App.shot) { fn(); return 0; } return setTimeout(fn, ms); };
+  /* requestAnimationFrame loop that runs only while screen #id is showing. draw(dt, t) in seconds. */
+  App.loop = function (id, draw) {
+    var raf = 0, last = 0, t = 0;
+    function tick(now) { var dt = Math.min(0.05, (now - last) / 1000 || 0.016); last = now; t += dt; draw(dt, t); raf = requestAnimationFrame(tick); }
+    function start() { if (!raf) { last = 0; raf = requestAnimationFrame(tick); } }
+    function stop() { if (raf) cancelAnimationFrame(raf); raf = 0; }
+    App.onEnter(id, start); App.onLeave(id, stop);
+    return { start: start, stop: stop };
+  };
+  App.current = function () { return App.stack[App.stack.length - 1]; };
+
+  function screens() { return qsa('.screen', device); }
+  function byId(id) { return id ? document.getElementById(id) : null; }
+  function isScreen(el) { return !!el && el.classList.contains('screen'); }
+  function startId() { var s = qs('.screen[data-start]', device) || screens()[0]; return s && s.id; }
+  function navBars() { return qsa('.nav-bar', device); }
+  function rootsOf(nav) {
+    var list = (nav.getAttribute('data-for') || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+    if (!list.length) list = qsa('[data-tab]', nav).map(function (b) { return b.getAttribute('data-tab'); });
+    return list;
+  }
+  function tabRoots() { var s = {}; navBars().forEach(function (n) { rootsOf(n).forEach(function (id) { s[id] = true; }); }); return s; }
+
+  /* ---------- chrome around the active screen ---------- */
+  function layoutChrome(screen) {
+    var anyNav = false;
+    navBars().forEach(function (nav) {
+      var on = rootsOf(nav).indexOf(screen.id) >= 0 || (screen.getAttribute('data-nav') || '') === (nav.id || '#');
+      nav.hidden = !on;
+      if (on) {
+        anyNav = true;
+        qsa('[data-tab]', nav).forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-tab') === screen.id); });
+      }
+    });
+    screen.classList.toggle('has-nav', anyNav);
+    var light = screen.getAttribute('data-status') === 'light';
+    if (statusBar) statusBar.classList.toggle('light', light);
+    if (gestureBar) gestureBar.classList.toggle('light', light && !anyNav);
+    var inset = getComputedStyle(screen).getPropertyValue('--inset-b');
+    var fab = qs('.fab', screen);
+    device.style.setProperty('--active-inset', fab && !fab.hidden ? 'calc(' + inset + ' + 72px)' : inset);
+    qsa('.review button[data-jump]').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-jump') === screen.id); });
+  }
+
+  function show(id, anim) {
+    var next = byId(id);
+    if (!isScreen(next)) { console.warn('No screen #' + id); App.snack(T.missing + id); return false; }
+    var prev = qs('.screen.active', device);
+    if (prev === next) return true;
+    if (prev) (App._leave[prev.id] || []).forEach(function (f) { try { f(prev); } catch (e) { console.error(e); } });
+    next.hidden = false;
+    next.classList.add('active');
+    layoutChrome(next);
+    if (prev) {
+      prev.classList.remove('active');
+      if (anim && MODE === 'live') {
+        var inC = 'anim-' + anim + '-in', outC = 'anim-' + anim + '-out';
+        next.classList.add(inC); prev.classList.add(outC);
+        setTimeout(function () {
+          next.classList.remove(inC); prev.classList.remove(outC);
+          if (!prev.classList.contains('active')) prev.hidden = true;
+        }, 320);
+      } else prev.hidden = true;
+    }
+    qsa('.content', next).forEach(function (c) { var bar = qs('.top-app-bar', next); if (bar) bar.classList.toggle('scrolled', c.scrollTop > 0); });
+    (App._enter[id] || []).forEach(function (f) { try { f(next); } catch (e) { console.error(e); } });
+    if (MODE === 'live') try { history.replaceState(null, '', '#' + id); } catch (e) { /* file:// in some browsers */ }
+    return true;
+  }
+
+  App.go = function (id) {
+    var roots = tabRoots(), cur = App.current();
+    if (roots[id] && (!cur || roots[cur])) return App.tab(id);
+    closeAll();
+    if (cur === id) return true;
+    var ok = show(id, 'push');
+    if (ok) App.stack.push(id);
+    return ok;
+  };
+  App.tab = function (id) {
+    closeAll();
+    var ok = show(id, 'fade');
+    if (ok) App.stack = [id];
+    return ok;
+  };
+  App.back = function () {
+    if (overlayStack.length) return closeTop();
+    if (App.stack.length > 1) { App.stack.pop(); show(App.current(), 'pop'); return true; }
+    var s = startId();
+    if (App.current() !== s && tabRoots()[App.current()]) return App.tab(s);
+    App.snack(T.root);
+    return false;
+  };
+  App.reset = function (id) {
+    closeAll();
+    var s = startId();
+    App.stack = (id === s || tabRoots()[id]) ? [id] : [s, id];
+    show(id);
+  };
+
+  /* ---------- overlays ---------- */
+  function openOverlay(id, anchor) {
+    var el = byId(id);
+    if (!el) { App.snack(T.missing + id); return false; }
+    if (overlayStack.indexOf(el) >= 0) return true;
+    var isMenu = el.classList.contains('menu');
+    if (isMenu && anchor) placeMenu(el, anchor);
+    overlayStack.push(el);
+    el.classList.add('open');
+    scrim.classList.toggle('clear', isMenu);
+    scrim.classList.add('on');
+    el.style.zIndex = 2 + overlayStack.length;
+    scrim.style.zIndex = 1 + overlayStack.length;
+    el.dispatchEvent(new CustomEvent('open', { bubbles: true }));
+    return true;
+  }
+  function placeMenu(menu, anchor) {
+    var d = device.getBoundingClientRect(), a = anchor.getBoundingClientRect();
+    menu.style.visibility = 'hidden'; menu.style.display = 'block';
+    var w = menu.offsetWidth || 200, h = menu.offsetHeight || 200;
+    menu.style.display = ''; menu.style.visibility = '';
+    var left = Math.min(Math.max(8, a.right - d.left - w), d.width - w - 8);
+    var top = a.bottom - d.top;
+    if (top + h > d.height - 32) top = Math.max(40, a.top - d.top - h);
+    menu.style.left = left + 'px'; menu.style.top = top + 'px';
+  }
+  function closeTop() {
+    var el = overlayStack.pop();
+    if (!el) return false;
+    el.classList.remove('open');
+    if (!overlayStack.length) scrim.classList.remove('on');
+    else { scrim.style.zIndex = 1 + overlayStack.length; scrim.classList.toggle('clear', overlayStack[overlayStack.length - 1].classList.contains('menu')); }
+    el.dispatchEvent(new CustomEvent('close', { bubbles: true }));
+    return true;
+  }
+  function closeAll() { while (overlayStack.length) closeTop(); }
+  App.sheet = function (id) { return openOverlay(id); };
+  App.dialog = function (id) { return openOverlay(id); };
+  App.menu = function (id, anchor) { return openOverlay(id, anchor); };
+  App.close = closeTop;
+  App.closeAll = closeAll;
+
+  var snackTimer;
+  App.snack = function (text, actionLabel, fn) {
+    if (!snackEl) return;
+    clearTimeout(snackTimer);
+    snackEl.innerHTML = '';
+    var t = document.createElement('span'); t.className = 'snack-text'; t.textContent = text; snackEl.appendChild(t);
+    if (actionLabel) {
+      var b = document.createElement('button'); b.className = 'snack-action'; b.textContent = actionLabel; b.setAttribute('data-js', '');
+      b.onclick = function (e) { e.stopPropagation(); snackEl.classList.remove('on'); if (typeof fn === 'function') fn(); else if (App.actions[fn]) App.actions[fn](b, e); };
+      snackEl.appendChild(b);
+    }
+    snackEl.classList.add('on');
+    snackTimer = setTimeout(function () { snackEl.classList.remove('on'); }, actionLabel ? 6000 : 3500);
+  };
+
+  /* ---------- interactions ---------- */
+  function onClick(e) {
+    var sub = e.target.closest('button,input[type=submit]');
+    if (sub && sub.form && (sub.type === 'submit')) sub.form.noValidate = true;  // validate in onSubmit with M3 error styling
+    var el = e.target.closest(ACTION_SEL + ',.segmented>button');
+    while (el && el.tagName === 'FORM') el = el.parentElement && el.parentElement.closest(ACTION_SEL + ',.segmented>button');  // forms act on submit only
+    if (!el || !device.contains(el)) return;
+    if (el.disabled || el.getAttribute('aria-disabled') === 'true') return;
+    var a = function (n) { return el.getAttribute(n); };
+    if (el.matches('a[href^="#"]')) e.preventDefault();
+
+    if (el.parentElement && el.parentElement.classList.contains('segmented')) {
+      var seg = el.parentElement;
+      if (seg.hasAttribute('data-multi')) el.classList.toggle('selected');
+      else qsa(':scope>button', seg).forEach(function (b) { b.classList.toggle('selected', b === el); });
+    }
+    if (el.hasAttribute('data-action')) {
+      var fn = App.actions[a('data-action')];
+      if (!fn) console.warn('No App.actions.' + a('data-action'));
+      else if (fn(el, e) === false) return;
+    }
+    if (el.hasAttribute('data-chip')) {
+      var row = el.closest('[data-single]');
+      if (row) qsa('[data-chip]', row).forEach(function (c) { c.classList.toggle('selected', c === el); });
+      else el.classList.toggle('selected');
+    }
+    if (el.hasAttribute('data-panel')) {
+      var tabs = el.closest('.tabs') || el.parentElement;
+      qsa('[data-panel]', tabs).forEach(function (t) { t.classList.toggle('active', t === el); });
+      var panel = byId(a('data-panel'));
+      if (panel) {
+        qsa(':scope>.tab-panel', panel.parentElement).forEach(function (p) { p.hidden = p !== panel; });
+        var c = panel.closest('.content'); if (c) c.scrollTop = 0;
+      }
+    }
+    if (el.hasAttribute('data-toggle')) {
+      var sel = a('data-toggle'), cls = a('data-toggle-class');
+      var targets = sel ? qsa(sel, device) : [el];
+      targets.forEach(function (t) { if (cls) t.classList.toggle(cls); else t.hidden = !t.hidden; });
+    }
+    if (el.hasAttribute('data-close')) closeTop();
+    if (el.hasAttribute('data-snack')) App.snack(a('data-snack'), a('data-snack-action'), a('data-snack-do'));
+    if (el.hasAttribute('data-todo')) App.snack(a('data-todo') || T.todo);
+    if (el.hasAttribute('data-back')) { App.back(); return; }
+    if (el.hasAttribute('data-tab')) { App.tab(a('data-tab')); return; }
+    if (el.hasAttribute('data-go')) { App.go(a('data-go')); return; }
+    if (el.hasAttribute('data-sheet')) { openOverlay(a('data-sheet')); return; }
+    if (el.hasAttribute('data-dialog')) { openOverlay(a('data-dialog')); return; }
+    if (el.hasAttribute('data-menu')) { openOverlay(a('data-menu'), el); return; }
+  }
+  function onSubmit(e) {
+    var form = e.target;
+    if (!device.contains(form)) return;
+    e.preventDefault();
+    var bad = qsa('input,textarea,select', form).filter(function (i) { return !i.checkValidity(); });
+    qsa('.field', form).forEach(function (f) { var i = qs('input,textarea,select', f); f.classList.toggle('error', !!i && bad.indexOf(i) >= 0); });
+    if (bad.length) { bad[0].focus(); return; }
+    var name = form.getAttribute('data-action');
+    if (name && App.actions[name]) App.actions[name](form, e);
+    if (form.hasAttribute('data-go')) App.go(form.getAttribute('data-go'));
+    if (form.hasAttribute('data-back')) App.back();
+    if (form.hasAttribute('data-snack')) App.snack(form.getAttribute('data-snack'));
+  }
+  function ripple(e) {
+    var host = e.target.closest('button,.list-item,.card,.chip,a,[data-go],[data-tab],[data-action]');
+    if (!host || !device.contains(host) || host.closest('.switch') || host.matches('input')) return;
+    var target = host.classList.contains('nav-item') ? (qs('.pill', host) || host) : host;
+    var r = target.getBoundingClientRect();
+    var size = Math.max(r.width, r.height) * 2;
+    var s = document.createElement('span');
+    s.className = 'ripple';
+    s.style.width = s.style.height = size + 'px';
+    s.style.left = (e.clientX - r.left - size / 2) + 'px';
+    s.style.top = (e.clientY - r.top - size / 2) + 'px';
+    if (getComputedStyle(target).position === 'static') target.style.position = 'relative';
+    target.classList.add('rpl-clip');
+    target.appendChild(s);
+    setTimeout(function () { s.remove(); target.classList.remove('rpl-clip'); }, 460);
+  }
+  function edgeSwipe() {
+    var sx = null, sy = 0;
+    device.addEventListener('pointerdown', function (e) {
+      var d = device.getBoundingClientRect();
+      sx = (e.clientX - d.left < 20) ? e.clientX : null; sy = e.clientY;
+    });
+    device.addEventListener('pointerup', function (e) {
+      if (sx !== null && e.clientX - sx > 60 && Math.abs(e.clientY - sy) < 80) App.back();
+      sx = null;
+    });
+  }
+
+  /* ---------- boot ---------- */
+  function buildFrame() {
+    device = qs('.device');
+    if (!device) { console.error('prototype: no .device element'); return false; }
+    if (!qs('.status-bar', device)) {
+      device.insertAdjacentHTML('afterbegin', '<div class="status-bar"><span class="num">' + (device.getAttribute('data-time') || '9:30') +
+        '</span><span class="sb-icons"><span class="ms fill">signal_cellular_alt</span><span class="ms fill">wifi</span><span class="ms fill">battery_full</span></span></div>');
+    }
+    statusBar = qs('.status-bar', device);
+    if (!document.getElementById('goo')) document.body.insertAdjacentHTML('afterbegin',
+      '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' +
+      // goo: blur + alpha threshold so touching shapes merge like liquid; goo-c keeps colours crisp; goo-s for small things
+      '<filter id="goo" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/></filter>' +
+      '<filter id="goo-c" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="g"/><feComposite in="SourceGraphic" in2="g" operator="atop"/></filter>' +
+      '<filter id="goo-s" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"/></filter>' +
+      '<filter id="grain" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>' +
+      '</defs></svg>');
+    if (!qs('.gesture-bar', device)) device.insertAdjacentHTML('beforeend', '<div class="gesture-bar"></div>');
+    gestureBar = qs('.gesture-bar', device);
+    overlaysEl = qs('.overlays', device);
+    if (!overlaysEl) { overlaysEl = document.createElement('div'); overlaysEl.className = 'overlays'; device.appendChild(overlaysEl); }
+    qsa('.sheet,.dialog,.menu', device).forEach(function (o) { if (o.parentElement !== overlaysEl) overlaysEl.appendChild(o); });
+    scrim = document.createElement('div'); scrim.className = 'scrim';
+    overlaysEl.insertBefore(scrim, overlaysEl.firstChild);
+    scrim.addEventListener('click', closeTop);
+    snackEl = document.createElement('div'); snackEl.className = 'snackbar'; device.appendChild(snackEl);
+    screens().forEach(function (s) { s.hidden = true; s.classList.remove('active'); });
+    qsa('form', device).forEach(function (f) { f.noValidate = true; });
+    return true;
+  }
+  function buildReview() {
+    if (MODE !== 'live') return;
+    var stage = device.parentElement;
+    if (!stage || !stage.classList.contains('stage')) return;
+    var p = document.createElement('aside'); p.className = 'review';
+    var h = '<button class="rv-back" data-rv-back>' + T.back + '</button><h2>' + T.screens + '</h2>';
+    screens().forEach(function (s) {
+      var t = s.getAttribute('data-title') || (qs('.top-app-bar .title', s) || {}).textContent || s.id;
+      h += '<button data-jump="' + s.id + '">' + escapeHtml(String(t).trim()) + ' <span style="opacity:.5">#' + s.id + '</span></button>';
+    });
+    p.innerHTML = h + '<p class="hint">' + T.hint + '</p>';
+    stage.appendChild(p);
+    p.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      if (b.hasAttribute('data-rv-back')) App.back(); else App.reset(b.getAttribute('data-jump'));
+    });
+  }
+  function escapeHtml(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function boot() {
+    if (!buildFrame()) return;
+    var hash = decodeURIComponent(location.hash.slice(1)).split('/');
+    var id = isScreen(byId(hash[0])) ? hash[0] : startId();
+    if (typeof App.ready === 'function') try { App.ready(); } catch (e) { console.error(e); }
+    if (MODE === 'audit') { window.addEventListener('load', function () { setTimeout(runAudit, 30); }); return; }
+    App.reset(id);
+    if (hash[1]) { var anchor = qs('[data-menu="' + hash[1] + '"]', byId(id)); openOverlay(hash[1], anchor); }
+    document.addEventListener('click', onClick);
+    document.addEventListener('submit', onSubmit);
+    device.addEventListener('pointerdown', ripple);
+    device.addEventListener('scroll', function (e) {
+      var c = e.target; if (!c.classList || !c.classList.contains('content')) return;
+      var bar = qs('.top-app-bar', c.closest('.screen')); if (bar) bar.classList.toggle('scrolled', c.scrollTop > 0);
+    }, true);
+    document.addEventListener('keydown', function (e) {
+      var typing = /INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || '');
+      if (e.key === 'Escape' || (e.altKey && e.key === 'ArrowLeft') || (e.key === 'Backspace' && !typing)) { e.preventDefault(); App.back(); }
+    });
+    edgeSwipe();
+    buildReview();
+    if (qs('.screen.active', device)) layoutChrome(qs('.screen.active', device));
+    document.dispatchEvent(new CustomEvent('app:ready'));
+  }
+
+  /* =================================================================================
+     AUDIT (?audit=1) — opens every screen and overlay, measures the real layout, and
+     writes JSON into <script id="__audit">. Run via scripts/proto.py audit.
+     ================================================================================= */
+  function runAudit() {
+    var fontsToCheck = [];
+    var iconFamily = '"Material Symbols Rounded"';
+    var rootCS = getComputedStyle(html);
+    ['--font-display', '--font-body'].forEach(function (v) {
+      var first = (rootCS.getPropertyValue(v) || '').split(',')[0].trim();
+      if (first && !/^(system-ui|sans-serif|serif|monospace|-apple-system|inherit|var\()/i.test(first)) fontsToCheck.push(first);
+    });
+    var loads = [document.fonts.load('24px ' + iconFamily, 'home')].concat(fontsToCheck.map(function (f) { return document.fonts.load('16px ' + f, 'Aa가'); }));
+    Promise.all(loads.map(function (p) { return p.catch(function () { return []; }); }))
+      .then(function () { return document.fonts.ready; })
+      .then(function () { try { audit(fontsToCheck, iconFamily); } catch (e) { writeAudit({ fatal: String(e && e.stack || e) }); } });
+  }
+  function writeAudit(res) {
+    var s = document.createElement('script');
+    s.type = 'application/json'; s.id = '__audit';
+    s.textContent = JSON.stringify(res).replace(/</g, '\\u003c');
+    document.body.appendChild(s);
+    document.title = 'AUDIT_DONE';
+  }
+
+  function audit(fontsToCheck, iconFamily) {
+    var issues = [];
+    var D = device.getBoundingClientRect();
+    var roots = tabRoots(), start = startId();
+    var rootCS = getComputedStyle(html);
+    var add = function (sev, kind, where, el, detail) {
+      issues.push({ severity: sev, kind: kind, where: where, el: el ? describe(el) : '', detail: detail || '' });
+    };
+
+    jsErrors.forEach(function (m) { add('error', 'js-error', 'global', null, m); });
+    /* fonts & theme */
+    if (!document.fonts.check('24px ' + iconFamily)) add('error', 'icon-font-missing', 'global', null, 'Material Symbols did not load (offline or missing <link>) — icons render as words.');
+    fontsToCheck.forEach(function (f) { if (!document.fonts.check('16px ' + f)) add('warn', 'font-missing', 'global', null, f + ' did not load — add its Google Fonts <link> or fix the family name.'); });
+    var theme = html.getAttribute('data-theme');
+    if (!theme || theme === 'UNSET') add('warn', 'theme-unset', 'global', null, 'html[data-theme] is unset — this is still the default shell theme, not a designed direction.');
+    var tokens = {};
+    ['primary', 'on-primary', 'primary-container', 'secondary', 'secondary-container', 'tertiary', 'tertiary-container', 'surface', 'surface-container',
+      'on-surface', 'on-surface-variant', 'outline-variant', 'font-display', 'font-body', 'btn-radius', 'card-radius'].forEach(function (k) { tokens[k] = rootCS.getPropertyValue('--' + k).trim(); });
+    var prim = parseColor(getComputedStyle(device).getPropertyValue('--primary').trim() || tokens.primary);
+    if (prim) {
+      var hsl = rgbToHsl(prim);
+      if (hsl[0] >= 245 && hsl[0] <= 290 && hsl[1] > 0.25) add('info', 'purple-primary', 'global', null, 'Primary is purple/violet (hue ' + Math.round(hsl[0]) + '°) — the default "AI app" look. Keep only if the brand truly calls for it.');
+      if (Math.abs(prim[0] - 0x67) < 6 && Math.abs(prim[1] - 0x50) < 6 && Math.abs(prim[2] - 0xa4) < 6) add('warn', 'baseline-m3-purple', 'global', null, 'Primary is the stock Material baseline #6750A4.');
+    }
+
+    /* navigation graph (static) */
+    var all = screens();
+    var ids = {}; all.forEach(function (s) { ids[s.id] = s; });
+    var overlays = qsa('.sheet,.dialog,.menu', device);
+    var oids = {}; overlays.forEach(function (o) { oids[o.id] = o; });
+    var edges = {}; var hosts = {};
+    var link = function (from, to) { (edges[from] = edges[from] || {})[to] = true; };
+    var ownerOf = function (el) { var s = el.closest('.screen'); if (s) return [s.id]; var o = el.closest('.sheet,.dialog,.menu'); if (o) return ['@' + o.id]; var n = el.closest('.nav-bar'); if (n) return rootsOf(n); return []; };
+    qsa('[data-go],[data-tab],[data-sheet],[data-dialog],[data-menu],[data-links]', device).forEach(function (el) {
+      var from = ownerOf(el);
+      [['data-go', ''], ['data-tab', ''], ['data-sheet', '@'], ['data-dialog', '@'], ['data-menu', '@']].forEach(function (pair) {
+        var v = el.getAttribute(pair[0]); if (v == null) return;
+        var ok = pair[1] ? !!oids[v] : !!ids[v];
+        if (!ok) add('error', 'broken-link', from.join(',') || 'global', el, pair[0] + '="' + v + '" points to nothing.');
+        from.forEach(function (f) { link(f, pair[1] + v); });
+        if (pair[1]) from.forEach(function (f) { (hosts[v] = hosts[v] || []).push(f); });
+      });
+      var extra = el.getAttribute('data-links');
+      if (extra) extra.split(',').map(function (s) { return s.trim(); }).filter(Boolean).forEach(function (v) {
+        var key = ids[v] ? v : oids[v] ? '@' + v : null;
+        if (!key) add('error', 'broken-link', from.join(',') || 'global', el, 'data-links "' + v + '" points to nothing.');
+        else { from.forEach(function (f) { link(f, key); }); if (key[0] === '@') from.forEach(function (f) { (hosts[v] = hosts[v] || []).push(f); }); }
+      });
+    });
+    var seen = {}; var queue = [start];
+    while (queue.length) {
+      var n = queue.shift(); if (seen[n]) continue; seen[n] = true;
+      Object.keys(edges[n] || {}).forEach(function (m) { if (!seen[m]) queue.push(m); });
+    }
+    all.forEach(function (s) {
+      if (!seen[s.id]) add('error', 'unreachable-screen', s.id, null, 'Nothing navigates to #' + s.id + ' from the start screen (add data-go/data-tab, or data-links="' + s.id + '" on the element whose JS navigates there).');
+      if (s.id !== start && !roots[s.id] && !qs('[data-back]', s) && !s.hasAttribute('data-no-up'))
+        add('warn', 'no-up-button', s.id, null, 'Pushed screen has no visible back/up button (top app bar arrow_back with data-back).');
+    });
+    overlays.forEach(function (o) { if (!seen['@' + o.id]) add('warn', 'unused-overlay', '@' + o.id, null, 'Overlay #' + o.id + ' is never opened from a reachable screen.'); });
+
+    /* layout, per screen and per overlay */
+    var report = { screens: [], overlays: [] };
+    var hideAll = function () { all.forEach(function (s) { s.hidden = true; s.classList.remove('active'); }); };
+    all.forEach(function (s) {
+      hideAll(); s.hidden = false; s.classList.add('active'); layoutChrome(s);
+      (App._enter[s.id] || []).forEach(function (f) { try { f(s); } catch (e) { add('error', 'js-error', s.id, null, 'onEnter threw: ' + e); } });
+      checkRoot(s, s.id, s, add);
+      qsa('[data-panel]', s).forEach(function (t) {  // inactive in-screen tabs
+        var panel = byId(t.getAttribute('data-panel'));
+        if (!panel) { add('error', 'broken-link', s.id, t, 'data-panel="' + t.getAttribute('data-panel') + '" points to nothing.'); return; }
+        if (!panel.hidden) return;
+        var sibs = qsa(':scope>.tab-panel', panel.parentElement), was = sibs.map(function (p) { return p.hidden; });
+        sibs.forEach(function (p) { p.hidden = p !== panel; });
+        checkRoot(panel, s.id + ' [tab: ' + (t.textContent || '').trim() + ']', s, add);
+        sibs.forEach(function (p, i) { p.hidden = was[i]; });
+      });
+      var title = s.getAttribute('data-title') || ((qs('.top-app-bar .title', s) || {}).textContent || '').trim() || s.id;
+      report.screens.push({ id: s.id, title: title, start: s.id === start, tabRoot: !!roots[s.id], controls: qsa(ACTION_SEL, s).length, textChars: (s.innerText || '').replace(/\s+/g, '').length });
+      if ((s.innerText || '').replace(/\s+/g, '').length < 15) add('warn', 'empty-screen', s.id, null, 'Screen has almost no content.');
+    });
+    overlays.forEach(function (o) {
+      var host = (hosts[o.id] || []).filter(function (h) { return ids[h]; })[0] || start;
+      hideAll(); ids[host].hidden = false; ids[host].classList.add('active'); layoutChrome(ids[host]);
+      var anchor = qs('[data-menu="' + o.id + '"]', ids[host]);
+      openOverlay(o.id, anchor);
+      checkRoot(o, '@' + o.id, ids[host], add);
+      closeAll();
+      report.overlays.push({ id: o.id, kind: o.classList.contains('sheet') ? 'sheet' : o.classList.contains('dialog') ? 'dialog' : 'menu', host: host });
+    });
+
+    /* de-duplicate */
+    var key = {}, out = [];
+    issues.forEach(function (i) { var k = i.severity + i.kind + i.where + i.el + i.detail; if (!key[k]) { key[k] = 1; out.push(i); } });
+    writeAudit({ app: document.title, theme: theme || '', lang: html.lang || '', start: start, tokens: tokens, fonts: fontsToCheck,
+      screens: report.screens, overlays: report.overlays, issues: out });
+
+    function checkRoot(root, where, screen, add) {
+      var els = qsa('*', root).filter(visible);
+      var texts = els.filter(hasOwnText);
+      var gradients = 0;
+      els.forEach(function (el) {
+        var cs = getComputedStyle(el), r = el.getBoundingClientRect();
+        if (/gradient/.test(cs.backgroundImage) && !el.classList.contains('skeleton')) gradients++;
+        /* off-screen spill */
+        if ((r.right > D.right + 1 || r.left < D.left - 1) && r.width > 0 && !el.closest('[data-overlap-ok]')) {
+          var clip = clippedX(el), px = Math.round(Math.max(r.right - D.right, D.left - r.left));
+          if (!clip) add('error', 'spills-off-screen', where, el, 'Extends ' + px + 'px past the screen edge.');
+          else if (clip === 'hidden') add('warn', 'clipped-off-screen', where, el, 'Cut off by its container: extends ' + px + 'px past the screen edge (use data-overlap-ok if it is a deliberate decorative bleed).');
+        }
+        /* tap targets */
+        if (isControl(el)) {
+          var box = el.matches('input[type=checkbox],input[type=radio]') && el.closest('label') ? el.closest('label').getBoundingClientRect() : r;
+          var min = el.classList.contains('chip') || el.closest('.chip-row,.chip-wrap,.segmented') ? 32 : 40;
+          if (Math.min(box.width, box.height) < min - 0.5 && !el.closest('p') && !(el.matches('.switch input')))
+            add('warn', 'small-tap-target', where, el, Math.round(box.width) + '×' + Math.round(box.height) + 'dp (aim for 48, min ' + min + ').');
+          if (el.hasAttribute('data-todo')) add('warn', 'todo-control', where, el, 'Placeholder interaction (data-todo) — make it real or drop the control.');
+          else if (!hasBehaviour(el)) add('warn', 'dead-control', where, el, 'Looks tappable but does nothing (no data-go/tab/back/sheet/dialog/menu/action/snack…).');
+        }
+      });
+      if (gradients > 2) add('warn', 'gradient-heavy', where, null, gradients + ' gradient backgrounds on one screen.');
+      texts.forEach(function (el) {
+        var cs = getComputedStyle(el);
+        var txt = ownText(el);
+        var fs = parseFloat(cs.fontSize);
+        if (fs < 11) add('warn', 'tiny-text', where, el, fs + 'px text (M3 minimum is 11).');
+        if (/\p{Extended_Pictographic}/u.test(txt)) add('warn', 'emoji', where, el, 'Emoji in UI text — use Material Symbols or real content instead.');
+        if (/lorem ipsum|placeholder|^item \d+$|^title$|^subtitle$|^text$|sample text|^label$|^(제목|내용|텍스트|부제목)$|STARTER/i.test(txt.trim()))
+          add('warn', 'placeholder-copy', where, el, 'Generic placeholder copy — write realistic content.');
+        if (cs.display !== 'inline' && el.clientWidth > 0) {
+          if (el.scrollWidth > el.clientWidth + 1) {
+            if (cs.overflowX === 'visible') add('error', 'text-overflow', where, el, 'Text is ' + (el.scrollWidth - el.clientWidth) + 'px wider than its box.');
+            else if (cs.textOverflow !== 'ellipsis') add('warn', 'text-clipped', where, el, 'Text is cut off without an ellipsis.');
+          }
+          if (cs.overflowY !== 'visible' && el.scrollHeight > el.clientHeight + 2 && (cs.webkitLineClamp === 'none' || !cs.webkitLineClamp) && !el.classList.contains('content') && !el.matches('.sheet-body,.dialog'))
+            add('warn', 'text-clipped-v', where, el, 'Text is cut off vertically.');
+        }
+        var cr = contrastOf(el, cs);
+        if (cr && cr.ratio < (isLarge(cs) ? 3 : 4.5) && !el.closest('[disabled],[aria-disabled=true]'))
+          add(cr.ratio < 3 ? 'error' : 'warn', 'low-contrast', where, el, 'Contrast ' + cr.ratio.toFixed(2) + ':1 (' + cr.fg + ' on ' + cr.bg + ').');
+      });
+      /* text vs text overlap */
+      var boxes = texts.map(function (el) { return { el: el, r: textRect(el) }; }).filter(function (b) { return b.r && b.r.width > 0; });
+      for (var i = 0; i < boxes.length; i++) for (var j = i + 1; j < boxes.length; j++) {
+        var a = boxes[i], b = boxes[j];
+        if (a.el.contains(b.el) || b.el.contains(a.el)) continue;
+        if (a.el.closest('.badge,[data-overlap-ok]') || b.el.closest('.badge,[data-overlap-ok]')) continue;
+        var ra = clipTo(a.r, clipRect(a.el)), rb = clipTo(b.r, clipRect(b.el));   // compare only what is actually visible
+        if (!ra || !rb) continue;
+        var ov = overlap(ra, rb);
+        if (ov > 0.15 * Math.min(area(ra), area(rb))) add('error', 'text-overlap', where, a.el, 'Overlaps "' + short(ownText(b.el)) + '".');
+      }
+      /* text covered by something else (FAB, bars, sheets) — at top, then scrolled to the bottom */
+      var covered = function (pass) {
+        texts.forEach(function (el) {
+          var r = textRect(el); if (!r || r.width < 1) return;
+          if (getComputedStyle(el).pointerEvents === 'none') return;
+          var cx = r.left + Math.min(r.width, 40) / 2, cy = r.top + r.height / 2;
+          if (!pointInClip(el, cx, cy, root)) return;
+          var hit = document.elementFromPoint(cx, cy);
+          if (!hit || hit === el || el.contains(hit) || hit.contains(el)) return;
+          if (hit.closest('.ripple,.status-bar,.gesture-bar,.badge,[data-overlap-ok]') || el.closest('[data-overlap-ok]')) return;
+          if (root.classList.contains('screen') && hit.closest('.overlays') && !hit.closest('.open')) return;
+          add('warn', 'text-covered', where, el, 'Covered by ' + describe(hit) + (pass ? ' when scrolled to the bottom' : '') + '.');
+        });
+      };
+      covered(false);
+      var scrollers = qsa('.content,.sheet-body', root);
+      scrollers.forEach(function (c) { c.scrollTop = c.scrollHeight; });
+      if (scrollers.some(function (c) { return c.scrollTop > 0; })) covered(true);
+      scrollers.forEach(function (c) { c.scrollTop = 0; });
+    }
+    function visible(el) {
+      if (el.closest('.ms,script,style,template,.ripple,.snackbar,.scrim')) return false;
+      var r = el.getBoundingClientRect(); if (r.width === 0 && r.height === 0) return false;
+      var cs = getComputedStyle(el); return cs.visibility !== 'hidden' && cs.display !== 'none' && parseFloat(cs.opacity) > 0.05;
+    }
+    function hasOwnText(el) { return !el.classList.contains('ms') && ownText(el).trim().length > 0; }
+    function ownText(el) { var t = ''; el.childNodes.forEach(function (n) { if (n.nodeType === 3) t += n.nodeValue; }); return t; }
+    function textRect(el) {
+      var rects = [];
+      el.childNodes.forEach(function (n) { if (n.nodeType === 3 && n.nodeValue.trim()) { var rg = document.createRange(); rg.selectNodeContents(n); var r = rg.getBoundingClientRect(); if (r.width) rects.push(r); } });
+      if (!rects.length) return null;
+      var l = Math.min.apply(null, rects.map(function (r) { return r.left; })), t = Math.min.apply(null, rects.map(function (r) { return r.top; }));
+      var rr = Math.max.apply(null, rects.map(function (r) { return r.right; })), b = Math.max.apply(null, rects.map(function (r) { return r.bottom; }));
+      return { left: l, top: t, right: rr, bottom: b, width: rr - l, height: b - t };
+    }
+    function clipRect(el, root) {
+      var c = { left: D.left, top: D.top, right: D.right, bottom: D.bottom };
+      for (var p = el.parentElement; p && p !== device.parentElement; p = p.parentElement) {
+        var cs = getComputedStyle(p);
+        if (cs.overflowX !== 'visible' || cs.overflowY !== 'visible') {
+          var r = p.getBoundingClientRect();
+          c = { left: Math.max(c.left, r.left), top: Math.max(c.top, r.top), right: Math.min(c.right, r.right), bottom: Math.min(c.bottom, r.bottom) };
+        }
+      }
+      return c;
+    }
+    function clipTo(r, c) {
+      var l = Math.max(r.left, c.left), t = Math.max(r.top, c.top), rr = Math.min(r.right, c.right), b = Math.min(r.bottom, c.bottom);
+      return rr > l && b > t ? { left: l, top: t, right: rr, bottom: b, width: rr - l, height: b - t } : null;
+    }
+    function pointInClip(el, x, y, root) { var c = clipRect(el, root); return x >= c.left && x <= c.right && y >= c.top && y <= c.bottom; }
+    function inView(el, r) { var c = clipRect(el); return r.right > c.left && r.left < c.right && r.bottom > c.top && r.top < c.bottom; }
+    function clippedX(el) {  // 'scroll' = inside a horizontal scroller (fine), 'hidden' = silently cut off, false = spills
+      var cut = false;
+      for (var p = el.parentElement; p && p !== device; p = p.parentElement) {
+        var ox = getComputedStyle(p).overflowX;
+        if (ox === 'visible') continue;
+        var r = p.getBoundingClientRect();
+        if (r.right > D.right + 1 || r.left < D.left - 1) continue;
+        if (ox === 'auto' || ox === 'scroll') return 'scroll';
+        cut = 'hidden';
+      }
+      return cut;
+    }
+    function isControl(el) {
+      return el.matches('button,a[href],select,textarea,input:not([type=hidden]),[role=button],.list-item,.chip,.card[data-go],' + ACTION_SEL) &&
+        !el.matches('form,label,.field input,.field textarea,.field select,.search-bar input,[data-links]:not(button):not(a)');
+    }
+    function hasBehaviour(el) {
+      if (el.matches('input,select,textarea,label,.switch *,.segmented>button')) return true;
+      var owner = el.closest(ACTION_SEL);
+      if (owner && owner.tagName !== 'FORM') return true;
+      if (el.matches('button[type=submit],button:not([type])') && el.closest('form')) return true;
+      return false;
+    }
+    function describe(el) {
+      if (!el || !el.tagName) return '';
+      var s = el.tagName.toLowerCase();
+      if (el.id) s += '#' + el.id;
+      var cls = (el.getAttribute('class') || '').split(/\s+/).filter(function (c) { return c && !/^(active|open|on|rpl-clip|has-nav)$/.test(c); }).slice(0, 2);
+      if (cls.length) s += '.' + cls.join('.');
+      var t = short((el.innerText || el.getAttribute('aria-label') || '').trim());
+      return t ? s + ' "' + t + '"' : s;
+    }
+    function short(t) { t = String(t || '').replace(/\s+/g, ' ').trim(); return t.length > 32 ? t.slice(0, 31) + '…' : t; }
+    function area(r) { return r.width * r.height; }
+    function overlap(a, b) { var w = Math.min(a.right, b.right) - Math.max(a.left, b.left), h = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top); return w > 0 && h > 0 ? w * h : 0; }
+    function isLarge(cs) { var f = parseFloat(cs.fontSize), w = parseInt(cs.fontWeight, 10) || 400; return f >= 24 || (f >= 18.66 && w >= 700); }
+    function contrastOf(el, cs) {
+      var fg = parseColor(cs.color); if (!fg) return null;
+      var layers = [];
+      for (var p = el; p; p = p.parentElement) {
+        var pcs = getComputedStyle(p);
+        if (pcs.backgroundImage && pcs.backgroundImage !== 'none') return null;
+        var bg = parseColor(pcs.backgroundColor);
+        if (bg && bg[3] > 0) { layers.push(bg); if (bg[3] >= 1) break; }
+        if (p === device) break;
+      }
+      var base = [255, 255, 255, 1];
+      for (var i = layers.length - 1; i >= 0; i--) base = blend(layers[i], base);
+      var f = blend(fg, base);
+      var L1 = lum(f), L2 = lum(base);
+      return { ratio: (Math.max(L1, L2) + 0.05) / (Math.min(L1, L2) + 0.05), fg: hex(f), bg: hex(base) };
+    }
+  }
+
+  /* colour helpers (shared) */
+  function parseColor(s) {
+    if (!s) return null; s = s.trim();
+    var m = s.match(/^rgba?\(([^)]+)\)$/);
+    if (m) { var p = m[1].split(/[\s,\/]+/).filter(Boolean).map(parseFloat); return [p[0], p[1], p[2], p.length > 3 ? p[3] : 1]; }
+    m = s.match(/^#([0-9a-f]{3,8})$/i);
+    if (m) {
+      var h = m[1]; if (h.length <= 4) h = h.split('').map(function (c) { return c + c; }).join('');
+      return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16), h.length === 8 ? parseInt(h.slice(6, 8), 16) / 255 : 1];
+    }
+    m = s.match(/^color\(srgb ([^)]+)\)$/);
+    if (m) { var q = m[1].split(/[\s\/]+/).filter(Boolean).map(parseFloat); return [q[0] * 255, q[1] * 255, q[2] * 255, q.length > 3 ? q[3] : 1]; }
+    return null;
+  }
+  function blend(top, base) { var a = top[3]; return [top[0] * a + base[0] * (1 - a), top[1] * a + base[1] * (1 - a), top[2] * a + base[2] * (1 - a), 1]; }
+  function lum(c) { var f = function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]); }
+  function hex(c) { return '#' + c.slice(0, 3).map(function (v) { return ('0' + Math.round(v).toString(16)).slice(-2); }).join(''); }
+  function rgbToHsl(c) {
+    var r = c[0] / 255, g = c[1] / 255, b = c[2] / 255, max = Math.max(r, g, b), min = Math.min(r, g, b), h = 0, s = 0, l = (max + min) / 2;
+    if (max !== min) { var d = max - min; s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      h = max === r ? (g - b) / d + (g < b ? 6 : 0) : max === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60; }
+    return [h, s, l];
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
+</script>
+<script id="app-js">
+var SHOT = App.shot, FILM = App.mode === 'film', CALM = App.reducedMotion;
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function $(id) { return document.getElementById(id); }
+function anim(el, frames, opts) { if (!el || SHOT || CALM) return null; return el.animate(frames, opts); }
+
+/* ── seed character ─────────────────────────────────────── */
+var BODY = {
+  almond: 'M50 80C67 88 75 102 73 116C71 130 61 137 50 137S29 130 27 116C25 102 33 88 50 80Z',
+  bean: 'M50 85C68 85 77 97 77 112S66 137 50 137 23 127 23 112 32 85 50 85Z',
+  sun: 'M50 77C63 87 70 102 69 116S60 137 50 137 31 130 31 116 37 87 50 77Z'
+};
+function seedSVG(h, vb) {
+  var stripes = h.type === 'sun' ? '<path class="stripe" d="M42 92C38 104 38 122 41 133M58 92C62 104 62 122 59 133"/>' : '';
+  return '<svg class="sd" viewBox="' + (vb || '0 0 100 140') + '" aria-hidden="true">' +
+    '<g class="sprout"><path class="stem" pathLength="1" d="M50 86C50 68 45 54 51 36"/>' +
+    '<path class="leaf ll" d="M51 36C40 22 22 22 14 31C25 42 42 43 51 36Z"/><path class="leaf lr" d="M51 36C60 20 80 16 88 24C81 37 63 42 51 36Z"/></g>' +
+    '<g class="bd"><path class="shell" fill="' + h.color + '" d="' + BODY[h.type] + '"/>' + stripes +
+    '<ellipse class="shine" cx="39" cy="98" rx="5" ry="9" transform="rotate(18 39 98)"/>' +
+    '<path class="crack" pathLength="1" d="M41 88l4.5 5 4.5-5 4.5 5 4.5-5"/>' +
+    '<g class="face"><g class="eyes"><ellipse cx="41" cy="110" rx="3.6" ry="4.8"/><ellipse cx="59" cy="110" rx="3.6" ry="4.8"/>' +
+    '<circle class="hl" cx="42.3" cy="108.2" r="1.3"/><circle class="hl" cx="60.3" cy="108.2" r="1.3"/></g>' +
+    '<path class="lids" d="M37 110q4 3.5 8 0M55 110q4 3.5 8 0"/><path class="joy" d="M37 112q4-5.5 8 0M55 112q4-5.5 8 0"/>' +
+    '<path class="mouth" d="M47 119q3 2.6 6 0"/><circle class="ck" cx="33" cy="118" r="4"/><circle class="ck" cx="67" cy="118" r="4"/></g></g></svg>';
+}
+function mood(el, m) { el.classList.remove('sleep', 'awake', 'happy'); el.classList.add(m); }
+function dirt(bed, xPct, fromBottom, n, spread) {
+  if (SHOT || CALM) return;
+  for (var i = 0; i < n; i++) {
+    var d = document.createElement('i'); d.className = 'dirt';
+    d.style.left = xPct + '%'; d.style.bottom = fromBottom + 'px';
+    var s = 4 + Math.random() * 5; d.style.width = d.style.height = s + 'px';
+    bed.appendChild(d);
+    var dx = (Math.random() - .5) * spread, up = 18 + Math.random() * 26;
+    var a = d.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(' + dx * .6 + 'px,' + (-up) + 'px)', offset: .45 },
+      { transform: 'translate(' + dx + 'px,6px)', opacity: 0 }], { duration: 620 + Math.random() * 200, easing: 'cubic-bezier(.2,.6,.4,1)' });
+    a.onfinish = (function (el) { return function () { el.remove(); }; })(d);
+  }
+}
+
+/* ── data ───────────────────────────────────────────────── */
+var HABITS = [
+  { name: '아침에 물 한 잔', short: '물 한 잔', when: '매일 아침', icon: 'water_drop', type: 'almond', color: '#d9a35b' },
+  { name: '스트레칭 5분', short: '스트레칭', when: '매일 아침', icon: 'self_improvement', type: 'bean', color: '#a9693e' },
+  { name: '자기 전 책 10쪽', short: '책 10쪽', when: '매일 밤', icon: 'menu_book', type: 'sun', color: '#e4c27c' },
+  { name: '한 줄 일기', short: '한 줄 일기', when: '매일 밤', icon: 'edit_note', type: 'almond', color: '#c47b4b' },
+  { name: '20분 걷기', short: '20분 걷기', when: '매일 저녁', icon: 'directions_walk', type: 'bean', color: '#8b5b3d' },
+  { name: '영양제 챙기기', short: '영양제', when: '매일 아침', icon: 'medication', type: 'sun', color: '#d29663' },
+  { name: '폰 없이 잠들기', short: '폰 없이 잠', when: '매일 밤', icon: 'bedtime', type: 'almond', color: '#9c6b49' },
+  { name: '영어 단어 10개', short: '단어 10개', when: '매일 낮', icon: 'translate', type: 'bean', color: '#c99a68' }
+];
+var CUSTOM_LOOK = [{ type: 'sun', color: '#cfa36f' }, { type: 'almond', color: '#b98552' }, { type: 'bean', color: '#a77a55' }];
+App.state.name = '';
+App.state.picked = [];          // habit indices, in planting order (= slot order)
+App.state.checked = {};         // habit index → true
+function who() { return esc(App.state.name || '지우'); }
+function paintNames() { document.querySelectorAll('.who').forEach(function (el) { el.textContent = App.state.name || '지우'; }); }
+
+/* ── 1 · name: the seed is a small state machine ─────────────
+   inputs: focus · text length · valid · bad submit · tap
+   states: sleep → awake (looks at what you type) → happy (valid name)  */
+var hero = $('hero-seed'), bubble = $('hero-bubble'), nameIn = $('name-input'), sleepT = 0;
+hero.innerHTML = seedSVG({ type: 'almond', color: '#d9a35b' }) + '<span class="zz" aria-hidden="true" data-overlap-ok><i>Z</i><i>z</i><i>z</i></span>';
+var NAME_RE = /^[가-힣a-zA-Z0-9 ]{1,8}$/;
+function say(t) { bubble.textContent = t; bubble.classList.toggle('on', !!t); }
+function hop(h) { anim(hero, [{ transform: 'translateY(0) scale(1,1)' }, { transform: 'translateY(4px) scale(1.08,.9)', offset: .2 },
+  { transform: 'translateY(-' + (h || 22) + 'px) scale(.94,1.08)', offset: .5 }, { transform: 'translateY(2px) scale(1.06,.94)', offset: .82 }, { transform: 'none' }],
+  { duration: 560, easing: 'ease-out' }); }
+function wake() {
+  clearTimeout(sleepT);
+  if (!hero.classList.contains('sleep')) return;
+  mood(hero, 'awake'); hop(26); say('앗, 누구세요?');
+}
+function heroRead(showErr) {
+  var v = nameIn.value, t = v.trim(), ok = NAME_RE.test(t) && t.length >= 1;
+  var bad = t && !/^[가-힣a-zA-Z0-9 ]*$/.test(t);
+  $('name-count').textContent = v.length + '/8';
+  $('name-field').classList.toggle('error', !!(bad || (showErr && !ok)));
+  $('name-msg').textContent = bad ? '한글·영문·숫자만 쓸 수 있어요' : (showErr && !ok) ? '이름을 한 글자 이상 적어 주세요' : '1~8자, 한글·영문·숫자';
+  // look at the end of the text: eyes travel left → right as the name grows, slightly down toward the field
+  var f = Math.min(1, v.length / 7);
+  hero.style.setProperty('--lx', (-5 + 10 * f).toFixed(1) + 'px');
+  hero.style.setProperty('--ly', v.length ? '4px' : '0px');
+  if (ok) { if (!hero.classList.contains('happy')) hop(14); mood(hero, 'happy'); say(t + '님, 반가워요!'); }
+  else if (!hero.classList.contains('sleep')) { mood(hero, 'awake'); say(bad ? '그건 못 읽겠어요…' : t ? '…' : '이름이 뭐예요?'); }
+  return ok;
+}
+function typeTick() { anim(hero.querySelector('.bd'), [{ transform: 'scale(1,1)' }, { transform: 'scale(1.05,.94)' }, { transform: 'scale(1,1)' }], { duration: 180 }); }
+nameIn.addEventListener('focus', wake);
+nameIn.addEventListener('input', function () { wake(); typeTick(); heroRead(false); });
+nameIn.addEventListener('blur', function () {
+  if (nameIn.value.trim()) return;
+  sleepT = setTimeout(function () { if (!nameIn.value.trim() && document.activeElement !== nameIn) { mood(hero, 'sleep'); say(''); hero.style.setProperty('--ly', '0px'); } }, 2600);
+});
+App.actions.pokeHero = function () {
+  if (hero.classList.contains('sleep')) { wake(); nameIn.focus(); return; }
+  hop(18);
+};
+App.actions.saveName = function () {
+  if (!heroRead(true)) {
+    wake(); say('이름을 먼저 알려 주세요');
+    anim(hero, [{ transform: 'rotate(0)' }, { transform: 'rotate(-9deg)' }, { transform: 'rotate(8deg)' }, { transform: 'rotate(-5deg)' }, { transform: 'rotate(0)' }], { duration: 480 });
+    nameIn.focus(); return false;
+  }
+  App.state.name = nameIn.value.trim(); paintNames();
+};
+
+/* ── 2 · pick: choosing a habit plants its seed ───────────── */
+var SLOTS = [20, 50, 80];
+function renderPackets() {
+  $('packets').innerHTML = HABITS.map(function (h, i) {
+    var on = App.state.picked.indexOf(i) >= 0;
+    return '<button class="pk' + (on ? ' on' : '') + '" data-action="toggleHabit" data-i="' + i + '" aria-pressed="' + on + '">' +
+      '<span class="pk-seed">' + seedSVG(h, '20 74 60 66') + '</span><span class="pk-name">' + esc(h.name) + '</span>' +
+      '<span class="pk-when">' + (on ? '심었어요' : h.when) + '</span><span class="pk-done"><span class="ms">check</span></span></button>';
+  }).join('') + '<button class="pk add" data-sheet="custom-sheet"><span class="ms">add</span><span class="pk-name">직접 쓰기</span><span class="pk-when">나만의 습관</span></button>';
+}
+function bedShell(bed, slots, dimples) {
+  bed.innerHTML = (dimples ? slots.map(function (x, k) { return '<i class="dimple" data-k="' + k + '" style="left:' + x + '%"></i>'; }).join('') : '') +
+    '<svg class="soil" viewBox="0 0 380 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V12C70 4 130 2 190 2S310 4 380 12V70Z"/></svg>';
+}
+function seedEl(i, x, tag) {
+  var h = HABITS[i], el = document.createElement(tag || 'div');
+  el.className = 'seed sleep'; el.style.left = x + '%'; el.setAttribute('data-i', i);
+  el.innerHTML = seedSVG(h) + '<span class="zz" aria-hidden="true" data-overlap-ok><i>Z</i><i>z</i><i>z</i></span>';
+  return el;
+}
+function labEl(i, x) { var l = document.createElement('span'); l.className = 'lab'; l.style.left = x + '%'; l.setAttribute('data-i', i); l.textContent = HABITS[i].short; return l; }
+function renderPickBed() {
+  var bed = $('pick-bed'); bedShell(bed, SLOTS, true);
+  App.state.picked.forEach(function (i, k) { bed.appendChild(seedEl(i, SLOTS[k])); bed.appendChild(labEl(i, SLOTS[k])); bed.querySelector('.dimple[data-k="' + k + '"]').classList.add('used'); });
+}
+function syncPickUI() {
+  var n = App.state.picked.length, cta = $('pick-cta');
+  $('bed-count').textContent = n;
+  cta.disabled = !n;
+  cta.textContent = n ? '씨앗 ' + n + '개 심고 시작하기' : '씨앗을 골라 주세요';
+}
+function scaleOf() { var d = document.querySelector('.device'); return d.getBoundingClientRect().width / d.offsetWidth || 1; }
+function plant(i, fromEl) {
+  var k = App.state.picked.length; App.state.picked.push(i);
+  var bed = $('pick-bed'), x = SLOTS[k], el = seedEl(i, x);
+  bed.appendChild(el);
+  var lab = labEl(i, x); bed.appendChild(lab);
+  bed.querySelector('.dimple[data-k="' + k + '"]').classList.add('used');
+  if (fromEl && !SHOT && !CALM) {
+    var s = scaleOf(), a = fromEl.getBoundingClientRect(), b = el.getBoundingClientRect();
+    var dx = (a.left + a.width / 2 - (b.left + b.width / 2)) / s, dy = (a.top + a.height / 2 - (b.top + b.height * .78)) / s;
+    var peak = Math.min(dy * .5, -40) - 70, spin = dx > 0 ? -1 : 1;
+    // seed is tossed from the packet in an arc, lands, squashes into the soil
+    el.animate([
+      { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.5) rotate(0deg)' },
+      { transform: 'translate(' + dx * .45 + 'px,' + peak + 'px) scale(.85) rotate(' + spin * 200 + 'deg)', offset: .42 },
+      { transform: 'translate(0,-30px) scale(1) rotate(' + spin * 350 + 'deg)', offset: .76, easing: 'cubic-bezier(.5,0,1,1)' },
+      { transform: 'translate(0,3px) scale(1.18,.8) rotate(' + spin * 360 + 'deg)', offset: .88 },
+      { transform: 'translate(0,0) scale(1,1) rotate(' + spin * 360 + 'deg)' }
+    ], { duration: 980, easing: 'cubic-bezier(.3,.1,.4,1)' });
+    lab.style.animationDelay = '.85s';
+    setTimeout(function () { dirt(bed, x, 54, 7, 60); }, 850);
+  }
+  syncPickUI();
+}
+function unplant(i) {
+  var k = App.state.picked.indexOf(i), bed = $('pick-bed');
+  var el = bed.querySelector('.seed[data-i="' + i + '"]');
+  App.state.picked.splice(k, 1);
+  if (el && !SHOT && !CALM) {
+    dirt(bed, SLOTS[k], 54, 5, 40);
+    var a = el.animate([{ transform: 'none' }, { transform: 'translateY(-46px) rotate(-30deg) scale(.9)', offset: .5 }, { transform: 'translateY(-20px) scale(.3)', opacity: 0 }], { duration: 420, easing: 'ease-out', fill: 'forwards' });
+    a.onfinish = function () { relayout(); };
+  } else relayout();
+  syncPickUI();
+}
+function relayout() {
+  // remaining seeds shuffle left so slots stay in planting order
+  var bed = $('pick-bed'), before = {};
+  bed.querySelectorAll('.seed').forEach(function (s) { before[s.getAttribute('data-i')] = s.getBoundingClientRect().left; });
+  renderPickBed();
+  var sc = scaleOf();
+  bed.querySelectorAll('.seed').forEach(function (s) {
+    var b = before[s.getAttribute('data-i')]; if (b == null) return;
+    var d = (b - s.getBoundingClientRect().left) / sc;
+    if (d) anim(s, [{ transform: 'translateX(' + d + 'px)' }, { transform: 'translateX(' + d * .5 + 'px) translateY(-14px)', offset: .5 }, { transform: 'none' }], { duration: 420, easing: 'ease-in-out' });
+  });
+}
+App.actions.toggleHabit = function (el) {
+  var i = +el.getAttribute('data-i'), on = App.state.picked.indexOf(i) >= 0;
+  if (!on && App.state.picked.length >= 3) {
+    el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+    App.snack('처음엔 3개까지만 심을 수 있어요. 하나를 빼고 골라 주세요');
+    return;
+  }
+  if (on) unplant(i); else plant(i, el.querySelector('.pk-seed'));
+  el.classList.toggle('on', !on); el.setAttribute('aria-pressed', String(!on));
+  el.querySelector('.pk-when').textContent = !on ? '심었어요' : HABITS[i].when;
+};
+App.actions.addCustom = function () {
+  var v = $('custom-input').value.trim();
+  if (v.length < 2) { $('custom-field').classList.add('error'); $('custom-msg').textContent = '두 글자 이상 적어 주세요'; $('custom-input').focus(); return false; }
+  var when = (document.querySelector('#custom-when .chip.selected') || {}).textContent || '매일';
+  var look = CUSTOM_LOOK[HABITS.length % 3];
+  HABITS.push({ name: v, short: v.length > 6 ? v.slice(0, 6) + '…' : v, when: when, icon: 'eco', type: look.type, color: look.color, custom: true });
+  $('custom-input').value = ''; $('custom-field').classList.remove('error'); $('custom-msg').textContent = '예: 출근길 계단 오르기 · 최대 12자';
+  App.close(); renderPackets();
+  var i = HABITS.length - 1;
+  if (App.state.picked.length < 3) { App.after(260, function () { App.actions.toggleHabit(document.querySelector('.pk[data-i="' + i + '"]')); }); }
+  else App.snack('‘' + v + '’ 씨앗을 만들었어요. 하나를 빼면 심을 수 있어요');
+};
+App.actions.startGarden = function () { if (!App.state.picked.length) return false; App.state.checked = {}; App.reset('today'); };
+App.onEnter('pick', function () { paintNames(); });
+
+/* ── 3 · today: the first check makes the seed sprout ────────── */
+function todaySlots(n) { return n === 1 ? [50] : n === 2 ? [32, 68] : [18, 50, 82]; }
+function picked() { return App.state.picked.length ? App.state.picked : [0, 2, 5]; }
+function renderToday() {
+  var list = picked(), slots = todaySlots(list.length), bed = $('today-bed');
+  bedShell(bed, slots, false);
+  list.forEach(function (i, k) {
+    var s = seedEl(i, slots[k], 'button');
+    s.setAttribute('data-action', 'check'); s.setAttribute('aria-label', HABITS[i].name + ' 체크');
+    if (App.state.checked[i]) { s.classList.add('sprouted'); mood(s, 'happy'); }
+    bed.appendChild(s); bed.appendChild(labEl(i, slots[k]));
+  });
+  var any = Object.keys(App.state.checked).length;
+  if (!any) bed.insertAdjacentHTML('beforeend', '<span class="tap-hint" style="left:' + slots[0] + '%"><span class="ms">touch_app</span> 눌러서 체크</span>');
+  $('td-list').innerHTML = list.map(function (i) {
+    var h = HABITS[i], done = !!App.state.checked[i];
+    return '<div class="td-row' + (done ? ' done' : '') + '" data-row="' + i + '"><span class="ic" style="background:' + h.color + '33"><span class="ms">' + h.icon + '</span></span>' +
+      '<span class="body"><span class="hd">' + esc(h.name) + '</span><span class="sp">' + (done ? '싹이 텄어요 · 방금' : h.when + ' · 아직 씨앗') + '</span></span>' +
+      '<button class="ck-btn" data-action="check" data-i="' + i + '" aria-label="' + esc(h.name) + ' 체크" aria-pressed="' + done + '"><i><span class="ms">check</span></i></button></div>';
+  }).join('');
+  paintToday();
+}
+function paintToday() {
+  var n = Object.keys(App.state.checked).length, total = picked().length;
+  $('gd-msg').innerHTML = !n ? '씨앗 ' + total + '개가 자고 있어요.<br>하나만 해내도 <em>싹이 터요.</em>'
+    : n === total ? '오늘 다 해냈어요!<br><em>' + total + '개 모두</em> 싹이 텄어요.'
+    : '<em>첫 싹</em>이 텄어요!<br>' + who() + '님이 해낸 만큼 자라요.';
+  $('done-bar').hidden = !n;
+  App.state.firstDone = n > 0;
+}
+function sprout(s, i) {
+  s.classList.add('sprouted'); mood(s, 'awake');
+  s.style.setProperty('--ly', '-3px');
+  var q = function (sel) { return s.querySelector(sel); };
+  if (!SHOT && !CALM) {
+    // 0–0.45s wiggle awake · 0.45 crack · 0.55–1.15 stem rises · 1.0–1.6 leaves unfurl · 1.6 joy
+    s.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-8deg)' }, { transform: 'rotate(7deg)' }, { transform: 'rotate(-5deg)' }, { transform: 'translateY(-10px) scale(.95,1.07)', offset: .8 }, { transform: 'none' }], { duration: 560, easing: 'ease-in-out' });
+    q('.crack').animate({ strokeDashoffset: [1, 0] }, { duration: 220, delay: 420, fill: 'backwards' });
+    q('.stem').animate({ strokeDashoffset: [1, 0] }, { duration: 620, delay: 540, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'backwards' });
+    q('.ll').animate([{ transform: 'scale(0) rotate(40deg)' }, { transform: 'scale(1.18) rotate(-6deg)', offset: .65 }, { transform: 'none' }], { duration: 640, delay: 980, easing: 'ease-out', fill: 'backwards' });
+    q('.lr').animate([{ transform: 'scale(0) rotate(-40deg)' }, { transform: 'scale(1.18) rotate(6deg)', offset: .65 }, { transform: 'none' }], { duration: 640, delay: 1080, easing: 'ease-out', fill: 'backwards' });
+    var bed = $('today-bed'); setTimeout(function () { dirt(bed, parseFloat(s.style.left), 92, 9, 80); }, 520);
+    // warm light swells behind the seed while it breaks open, then fades: "you did this"
+    var g = document.createElement('i'); g.className = 'glow'; g.style.left = s.style.left; g.style.bottom = '40px'; bed.appendChild(g);
+    g.animate([{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1)', opacity: 1, offset: .45 }, { transform: 'scale(1.25)', opacity: 0 }], { duration: 1700, delay: 380, easing: 'ease-out', fill: 'both' });
+    setTimeout(function () { if (s.classList.contains('sprouted')) { mood(s, 'happy'); anim(s, [{ transform: 'none' }, { transform: 'translateY(-8px)' }, { transform: 'none' }], { duration: 360, easing: 'ease-out' }); } }, 1650);
+  } else mood(s, 'happy');
+}
+function unsprout(s) { s.classList.remove('sprouted'); mood(s, 'sleep'); s.style.setProperty('--ly', '0px'); }
+App.actions.check = function (el) {
+  var i = +el.getAttribute('data-i'), row = document.querySelector('.td-row[data-row="' + i + '"]'), s = document.querySelector('#today-bed .seed[data-i="' + i + '"]');
+  var hint = document.querySelector('#today .tap-hint'); if (hint) hint.remove();
+  if (App.state.checked[i]) {
+    delete App.state.checked[i]; unsprout(s); row.classList.remove('done');
+    row.querySelector('.sp').textContent = HABITS[i].when + ' · 아직 씨앗'; paintToday(); return;
+  }
+  App.state.checked[i] = true; sprout(s, i); row.classList.add('done');
+  row.querySelector('.sp').textContent = '싹이 텄어요 · 방금';
+  row.querySelector('.ck-btn').setAttribute('aria-pressed', 'true');
+  paintToday();
+};
+App.actions.finishFlow = function () { App.snack('좋아요! 알림·기록 화면은 이 흐름 승인 후 이어서 만들어요'); };
+App.onEnter('today', function () { paintNames(); renderToday(); });
+
+/* ── boot + still/film states ───────────────────────────── */
+App.ready = function () {
+  renderPackets(); renderPickBed(); syncPickUI(); paintNames();
+  if (SHOT) {           // still screenshots show each screen's meaningful moment
+    App.state.picked = [0, 2, 5]; renderPackets(); renderPickBed(); syncPickUI();
+    App.state.checked = { 0: true };
+  }
+};
+if (FILM) {             // proto.py frames: play each signature moment on a fixed script
+  App.onEnter('name', function () {
+    setTimeout(function () { wake(); }, 500);
+    '지우'.split('').forEach(function (c, k) { setTimeout(function () { nameIn.value += c; typeTick(); heroRead(false); }, 1200 + k * 500); });
+  });
+  App.onEnter('pick', function () {
+    // three seeds tossed one after another: arc → land → squash → dirt
+    App.state.picked = []; renderPackets(); renderPickBed(); syncPickUI();
+    [0, 3, 6].forEach(function (i, k) { setTimeout(function () { App.actions.toggleHabit(document.querySelector('.pk[data-i="' + i + '"]')); }, 300 + k * 1100); });
+  });
+  App.onEnter('today', function () {
+    App.state.checked = {}; renderToday();
+    setTimeout(function () { App.actions.check(document.querySelector('.ck-btn[data-i="' + picked()[0] + '"]')); }, 400);
+  });
+}
+</script>
+</body>
+</html>

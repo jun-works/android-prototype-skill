@@ -1,0 +1,9 @@
+#!/bin/sh
+# Refuse to push if tracked files include private examples or private words.
+REPO="$(git rev-parse --show-toplevel)"
+WORDS="${PRIVATE_DIR:-$(dirname "$REPO")/android-prototype-private}/private-words.txt"
+if git ls-files | grep -q "examples/_private"; then echo "BLOCKED: private example is tracked"; exit 1; fi
+if [ -f "$WORDS" ] && git grep -I -i -q -F -f "$WORDS" HEAD -- 2>/dev/null; then
+  echo "BLOCKED: private words in tracked files:"; git grep -I -i -l -F -f "$WORDS" HEAD --; exit 1
+fi
+exit 0
